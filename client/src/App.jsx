@@ -38,7 +38,7 @@ function App() {
         <h1>Transcript Upload</h1>
         <span>
         <Form.Group controlId="formFileLg" className="mb-3">
-          <h2>Transcript Upload</h2>
+          
           <br></br>
           <Form.Control type="file" size="lg" onChange={e => 
             handleChangeFile(e.target.files[0])}/>
