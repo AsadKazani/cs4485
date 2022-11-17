@@ -1,9 +1,19 @@
-.transcript{
-    text-align: center;
+.transcript {
+  text-align: center;
 }
 
+.bdn {
+  justify-content: center;
+  display: flex;
+}
 
-.bdn{
-    text-align: center;
-    padding-left: 37.5%;
+.acc {
+  display: flex;
+
+  justify-content: center;
+}
+
+.accord {
+  width: 50%;
+  text-align: center;
 }

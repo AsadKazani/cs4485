@@ -1,28 +1,44 @@
-import Course from "./course"
-import Term from "./term"
-import Badge from 'react-bootstrap/Badge';
-import './transcript.css'
+import Course from "./course";
+import Term from "./term";
+import Badge from "react-bootstrap/Badge";
+import "./transcript.css";
+import Accordion from "react-bootstrap/Accordion";
+import "./transcript.css";
 
-
-function Transcript(props){
-
-    const array = props.transcript.student.terms.map((value, idx)=>{
-        const c = value.courses.map((v, idx)=>{
-            return <div className="bdn"><Course info = {v}/></div>
-        })
-        return <div key={idx}>
-            <Term name={value.name} year={value.year}/>
-            {c}
-            </div> 
-    })
-    return <div className="transcript">
-        <h1>
+function Transcript(props) {
+  const array = props.transcript.student.terms.map((value, idx) => {
+    const c = value.courses.map((v, idx) => {
+      return (
+        <div className="bdn">
+          <Course info={v} />
+        </div>
+      );
+    });
+    return (
+      <div key={idx}>
+        <div className="acc">
+          <Accordion defaultActiveKey="1" className="accord">
+            <Accordion.Item eventKey="1">
+              <Accordion.Header>
+                {value.name} {value.year}
+              </Accordion.Header>
+              <Accordion.Body>{c}</Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
+        </div>
+      </div>
+    );
+  });
+  return (
+    <div className="transcript">
+      <h1>
         <Badge bg="secondary">Student: {props.transcript.student.name}</Badge>
         <br />
         <Badge bg="secondary">Id: {props.transcript.student.id}</Badge>
       </h1>
-        {array}
+      {array}
     </div>
+  );
 }
 
-export default Transcript
+export default Transcript;

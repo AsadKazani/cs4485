@@ -38,3 +38,12 @@
     transform: rotate(360deg);
   }
 }
+
+.upbutton {
+  display: flex;
+  justify-content: center;
+}
+
+.nav {
+  padding-left: 20%;
+}
