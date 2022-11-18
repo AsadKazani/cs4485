@@ -3,6 +3,8 @@ import Track from "./track";
 export const dataScienceRequirements: Track = {
   requiredCoreHours: 15, 
   requiredCoreGPA: 3.19, 
+  numberRequiredCoreCourses: 4,
+  numberRequiredAdditionalCoreCourses: 1,
   requiredCoreCourses: [
     {
       courseName: "Statistical Methods for Data Sciences",

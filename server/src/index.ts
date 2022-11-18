@@ -2,9 +2,15 @@ import express from 'express'
 import Transcript from './entity/transcript'
 import parseTranscript from './parser/transcript-parser'
 import cors from 'cors'
+import { Audit, audit } from './auditer/transcript-auditer'
 
 interface TextContent{
     text: string
+}
+
+interface DegreeAudit{
+    transcript: Transcript; 
+    audit: Audit; 
 }
 
 const main = async()=>{
@@ -18,9 +24,13 @@ const main = async()=>{
 
     app.post('/', (req, res)=>{
         const content: TextContent = req.body
-        console.log(content.text)
         const transcript: Transcript = parseTranscript(content.text)
-        res.json(transcript)
+        const completedAudit: Audit = audit(transcript, "track")
+        const degreeAudit: DegreeAudit = {
+            transcript: transcript, 
+            audit: completedAudit
+        }
+        res.json(degreeAudit)
     })
 
     app.listen(port, ()=>{

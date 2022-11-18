@@ -89,7 +89,6 @@ const parseTerms = (lines: string[]): Term[] => {
         break;
       }
       if (graduateRecord[i].startsWith(INSTRUCTOR_LINE_PREFIX)) {
-        // parseCourseLine(graduateRecord[i-1])
         termCourses.push(graduateRecord[i - 1]);
       }
     }

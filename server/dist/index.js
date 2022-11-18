@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const transcript_parser_1 = __importDefault(require("./parser/transcript-parser"));
 const cors_1 = __importDefault(require("cors"));
+const transcript_auditer_1 = require("./auditer/transcript-auditer");
 const main = async () => {
     const app = (0, express_1.default)();
     app.use((0, cors_1.default)());
@@ -16,9 +17,13 @@ const main = async () => {
     });
     app.post('/', (req, res) => {
         const content = req.body;
-        console.log(content.text);
         const transcript = (0, transcript_parser_1.default)(content.text);
-        res.json(transcript);
+        const completedAudit = (0, transcript_auditer_1.audit)(transcript, "track");
+        const degreeAudit = {
+            transcript: transcript,
+            audit: completedAudit
+        };
+        res.json(degreeAudit);
     });
     app.listen(port, () => {
         console.log(`Server is running on port ${port}`);

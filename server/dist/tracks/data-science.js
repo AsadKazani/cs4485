@@ -4,6 +4,8 @@ exports.dataScienceRequirements = void 0;
 exports.dataScienceRequirements = {
     requiredCoreHours: 15,
     requiredCoreGPA: 3.19,
+    numberRequiredCoreCourses: 4,
+    numberRequiredAdditionalCoreCourses: 1,
     requiredCoreCourses: [
         {
             courseName: "Statistical Methods for Data Sciences",

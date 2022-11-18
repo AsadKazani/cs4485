@@ -12,6 +12,7 @@ window.Buffer = window.Buffer || require("buffer").Buffer;
 function App() {
   const [text, setText] = useState(null);
   const [transcript, setTranscript] = useState(null);
+  const [audit, setAudit] = useState(null)
 
   const handleResetClick = () => {
     setText(null);
@@ -21,7 +22,9 @@ function App() {
   let handleFile = async (e) => {
     const content = e.target.result;
     const res = await axios.post("http://localhost:5000", { text: content });
-    setTranscript(res.data);
+    setTranscript(res.data.transcript);
+    setAudit(res.data.audit)
+    console.log(res.data.audit)
     setText(content);
   };
 
