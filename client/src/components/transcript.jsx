@@ -17,7 +17,7 @@ function Transcript(props) {
     return (
       <div key={idx}>
         <div className="acc">
-          <Accordion defaultActiveKey="1" className="accord">
+          <Accordion defaultActiveKey="0" className="accord">
             <Accordion.Item eventKey="1">
               <Accordion.Header>
                 {value.name} {value.year}
@@ -30,14 +30,16 @@ function Transcript(props) {
     );
   });
   return (
-    <div className="transcript">
-      <h1>
-        <Badge bg="secondary">Student: {props.transcript.student.name}</Badge>
-        <br />
-        <Badge bg="secondary">Id: {props.transcript.student.id}</Badge>
-      </h1>
-      {array}
-    </div>
+    <>
+      <div className="transcript">
+        <h1>
+          <Badge bg="dark">Student: {props.transcript.student.name}</Badge>
+          <br />
+          <Badge bg="dark">Id: {props.transcript.student.id}</Badge>
+        </h1>
+        {array}
+      </div>
+    </>
   );
 }
 
