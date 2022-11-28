@@ -1,6 +1,6 @@
 import express from 'express'
 import Transcript from './entity/transcript'
-import parseTranscript from './parser/transcript-parser'
+import parseTextTranscript from './parser/text-transcript-parser'
 import cors from 'cors'
 import { Audit, audit } from './auditer/transcript-auditer'
 import pdf from 'pdf-parse'
@@ -30,7 +30,7 @@ const main = async()=>{
     app.post('/', (req, res)=>{
         const content: TextContent = req.body
         const trackName = content.track
-        const transcript: Transcript = parseTranscript(content.text)
+        const transcript: Transcript = parseTextTranscript(content.text)
         const completedAudit: Audit = audit(transcript, trackName)
         const degreeAudit: DegreeAudit = {
             transcript: transcript, 
@@ -52,11 +52,9 @@ const main = async()=>{
     //     size: 527961
     //   }
     app.post('/test', upload.single('file'), async (req, res)=>{
-        const file = req.file
         const path = req.file?.path
         const pdfDataBuffer = await fs.readFileSync(path!) 
         const pdfData = await pdf(pdfDataBuffer)
-        console.log('pdf data is: ', pdfData.text)
         fs.unlinkSync(path!)
     })
 

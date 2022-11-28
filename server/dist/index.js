@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const transcript_parser_1 = __importDefault(require("./parser/transcript-parser"));
+const text_transcript_parser_1 = __importDefault(require("./parser/text-transcript-parser"));
 const cors_1 = __importDefault(require("cors"));
 const transcript_auditer_1 = require("./auditer/transcript-auditer");
 const pdf_parse_1 = __importDefault(require("pdf-parse"));
@@ -22,7 +22,7 @@ const main = async () => {
     app.post('/', (req, res) => {
         const content = req.body;
         const trackName = content.track;
-        const transcript = (0, transcript_parser_1.default)(content.text);
+        const transcript = (0, text_transcript_parser_1.default)(content.text);
         const completedAudit = (0, transcript_auditer_1.audit)(transcript, trackName);
         const degreeAudit = {
             transcript: transcript,
@@ -32,11 +32,9 @@ const main = async () => {
     });
     app.post('/test', upload.single('file'), async (req, res) => {
         var _a;
-        const file = req.file;
         const path = (_a = req.file) === null || _a === void 0 ? void 0 : _a.path;
         const pdfDataBuffer = await fs_1.default.readFileSync(path);
         const pdfData = await (0, pdf_parse_1.default)(pdfDataBuffer);
-        console.log('pdf data is: ', pdfData.text);
         fs_1.default.unlinkSync(path);
     });
     app.listen(port, () => {

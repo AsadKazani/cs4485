@@ -100,4 +100,4 @@ const parseTerms = (lines) => {
     }
     return terms;
 };
-//# sourceMappingURL=transcript-parser.js.map
+//# sourceMappingURL=text-transcript-parser.js.map

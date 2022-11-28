@@ -10,7 +10,7 @@ import Term from "../entity/term";
 import Course from "../entity/course";
 import Transcript from "../entity/transcript";
 import { EOL } from "os";
-export default function parseTranscript(text: string): Transcript {
+export default function parseTextTranscript(text: string): Transcript {
   const lines: string[] = text.split(EOL);
   const transcript = new Transcript();
   const student: Student = new Student();
