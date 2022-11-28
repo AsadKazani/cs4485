@@ -9,10 +9,17 @@ interface CourseMapping {
   takenCourseIdxs: number[];
 }
 
+interface OutstandingRequirements{
+  requiredIncompleteCoreCourses: Course[]; 
+  requiredIncompleteElectiveCourses: Course[];
+}
+
 export interface Audit{
   coreGPAInfo: GPAInfo; 
   additionalCoreGPAInfo: GPAInfo; 
   electiveGPAInfo: GPAInfo; 
+  track: Track; 
+  outstandingRequirements: OutstandingRequirements
 }
 
 class GPAInfo {
@@ -22,6 +29,7 @@ class GPAInfo {
   inProgressCourses: Course[] = [];
   factoredCourses: Course[] = [];
   numberCourses: number = 0;
+  meetsCoreGPARequirement: boolean = true
 }
 
 export const audit = (transcript: Transcript, track: string): Audit => {
@@ -36,18 +44,104 @@ export const audit = (transcript: Transcript, track: string): Audit => {
     trackRequirements.additionalCoreChoices
   );
 
-  const coreGPAInfo = calculateGPA(coreCourseMapping, terms);
-  const additionalGPAInfo = calculateGPA(additionalCoreCourseMapping, terms)
-  const nonCoreCourses = retrieveElectiveGPA(terms, coreCourseMapping, additionalCoreCourseMapping)
+  const coreGPAInfo = calculateGPA(coreCourseMapping, terms, trackRequirements);
+  const additionalGPAInfo = calculateGPA(additionalCoreCourseMapping, terms, trackRequirements)
+  const nonCoreCourses = retrieveElectiveGPA(terms, coreCourseMapping, additionalCoreCourseMapping, trackRequirements)
+  coreGPAInfo.factoredCourses.sort(descendingCourseGPAComparator)
+  additionalGPAInfo.factoredCourses.sort(descendingCourseGPAComparator)
+  nonCoreCourses.factoredCourses.sort(descendingCourseGPAComparator)
+
+  const incompleteRequirements: OutstandingRequirements = {
+    requiredIncompleteCoreCourses: [], 
+    requiredIncompleteElectiveCourses: []
+  }
+
   const audit: Audit ={
     coreGPAInfo: coreGPAInfo, 
     additionalCoreGPAInfo: additionalGPAInfo,
-    electiveGPAInfo: nonCoreCourses
-  } 
+    electiveGPAInfo: nonCoreCourses, 
+    track: trackRequirements,
+    outstandingRequirements: incompleteRequirements
+  }
+  aggregateAuditInfo(trackRequirements, audit)
+  computeOutstandingRequirements(audit)
   return audit
 };
 
-const retrieveElectiveGPA = (terms: Term[], coreMapping: CourseMapping[], additionalCoreMapping: CourseMapping[]) =>{
+const computeOutstandingRequirements = (audit: Audit)=>{
+  const {requiredCoreCourses} = audit.track
+  const {coreGPAInfo, electiveGPAInfo, outstandingRequirements} = audit
+  const requiredCoursesSet = new Set<string>()
+  requiredCoreCourses.forEach(course=> requiredCoursesSet.add(`${course.coursePrefix} ${course.courseNumber}`))
+  const allCores = coreGPAInfo.factoredCourses.concat(coreGPAInfo.inProgressCourses)
+  const takenCoreCourseNames: string[] = []
+  allCores.forEach(course=> takenCoreCourseNames.push(`${course.coursePrefix} ${course.courseNumber}`))
+
+
+  for(let i=0; i < takenCoreCourseNames.length; i++){
+    const courseName = takenCoreCourseNames[i]
+    if(requiredCoursesSet.has(courseName)){
+      requiredCoursesSet.delete(courseName)
+      delete takenCoreCourseNames[i]
+    }
+  }
+
+  const additionalCoreRequirementCourseNames = takenCoreCourseNames.flat()
+  const incompleteAdditionalCoreRequirements = []
+  for(let i = 0; i < additionalCoreRequirementCourseNames.length; i++){
+    for(let j = 0; j < allCores.length; j++){
+      const course = allCores[j]
+      const cName = `${course.coursePrefix} ${course.courseNumber}`
+      if(cName === additionalCoreRequirementCourseNames[i]){
+        incompleteAdditionalCoreRequirements.push(allCores[j])
+        break;
+      }
+    }
+  }
+
+  outstandingRequirements.requiredIncompleteCoreCourses = incompleteAdditionalCoreRequirements
+
+
+}
+
+const aggregateAuditInfo = (track: Track, audit: Audit)=>{
+  let needed_courses = track.numberRequiredAdditionalCoreCourses
+  const {coreGPAInfo, additionalCoreGPAInfo, electiveGPAInfo} = audit
+  const {factoredCourses: coreCourses} = coreGPAInfo
+  const {factoredCourses: extraCore} = additionalCoreGPAInfo
+  const {factoredCourses: electiveCourses} = electiveGPAInfo
+  while(extraCore.length && needed_courses){
+    coreCourses.push(extraCore[extraCore.length-1])
+    needed_courses--
+    extraCore.pop()
+  }
+  
+  extraCore.forEach(course=> electiveCourses.push(course))
+  electiveCourses.sort(descendingCourseGPAComparator)
+  
+  coreCourses.forEach(course=> {
+    coreGPAInfo.attemptedPoints += course.attemptedPoints!
+    coreGPAInfo.totalPoints+= course.points!
+  })
+
+  coreGPAInfo.gpa = coreGPAInfo.totalPoints / coreGPAInfo.attemptedPoints
+  coreGPAInfo.meetsCoreGPARequirement = coreGPAInfo.gpa >= track.requiredCoreGPA
+
+  electiveCourses.forEach(course=>{
+    electiveGPAInfo.attemptedPoints += course.attemptedPoints!
+    electiveGPAInfo.totalPoints+= course.points!
+  })
+
+  electiveGPAInfo.gpa = electiveGPAInfo.totalPoints / electiveGPAInfo.attemptedPoints
+  electiveGPAInfo.meetsCoreGPARequirement = electiveGPAInfo.gpa >= track.requiredElectiveGPA
+}
+
+const descendingCourseGPAComparator = (a: Course, b: Course)=>{
+  return a.points! >= b.points! ? -1: 1
+}
+
+
+const retrieveElectiveGPA = (terms: Term[], coreMapping: CourseMapping[], additionalCoreMapping: CourseMapping[], track: Track) =>{
   const nonCoreCourses = retrieveNonCoreCourses(terms, coreMapping, additionalCoreMapping)
   const electiveGPAInfo: GPAInfo = new GPAInfo()
   nonCoreCourses.forEach((course: Course)=>{
@@ -57,12 +151,9 @@ const retrieveElectiveGPA = (terms: Term[], coreMapping: CourseMapping[], additi
         electiveGPAInfo.inProgressCourses.push(course)
       }else{
         electiveGPAInfo.factoredCourses.push(course)
-        electiveGPAInfo.attemptedPoints += course.attemptedPoints!
-        electiveGPAInfo.totalPoints+= course.points!
       }
     }
   })
-  electiveGPAInfo.gpa = electiveGPAInfo.totalPoints / electiveGPAInfo.attemptedPoints
   return electiveGPAInfo
 }
 
@@ -108,7 +199,7 @@ const createCourseMapping = (
   return coreCourseMapping;
 };
 
-const calculateGPA = (mapping: CourseMapping[], terms: Term[]): GPAInfo => {
+const calculateGPA = (mapping: CourseMapping[], terms: Term[], track: Track): GPAInfo => {
   const courseGPAInfo = new GPAInfo()
   courseGPAInfo.numberCourses = mapping.length
   for (let i = 0; i < mapping.length; i++) {
@@ -118,10 +209,7 @@ const calculateGPA = (mapping: CourseMapping[], terms: Term[]): GPAInfo => {
       continue;
     }
     courseGPAInfo.factoredCourses.push(terms[value.takenCourseIdxs[0]].courses[value.takenCourseIdxs[1]])
-    courseGPAInfo.totalPoints += terms[value.takenCourseIdxs[0]].courses[value.takenCourseIdxs[1]].points!;
-    courseGPAInfo.attemptedPoints += terms[value.takenCourseIdxs[0]].courses[value.takenCourseIdxs[1]].attemptedPoints!;
   }
-  courseGPAInfo.gpa = courseGPAInfo.totalPoints / courseGPAInfo.attemptedPoints
   return courseGPAInfo;
 };
 

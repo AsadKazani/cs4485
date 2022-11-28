@@ -9,7 +9,7 @@ function Transcript(props) {
   const array = props.transcript.student.terms.map((value, idx) => {
     const c = value.courses.map((v, idx) => {
       return (
-        <div className="bdn">
+        <div key={idx} className="bdn">
           <Course info={v} />
         </div>
       );
