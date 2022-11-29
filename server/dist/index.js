@@ -19,7 +19,7 @@ const main = async () => {
     app.get("/", (_, res) => {
         res.send("hello :)");
     });
-    app.post('/', (req, res) => {
+    app.post('/text', (req, res) => {
         const content = req.body;
         const trackName = content.track;
         const transcript = (0, text_transcript_parser_1.default)(content.text);
@@ -30,12 +30,16 @@ const main = async () => {
         };
         res.json(degreeAudit);
     });
-    app.post('/test', upload.single('file'), async (req, res) => {
+    app.post('/pdf', upload.single('file'), async (req, res) => {
         var _a;
         const path = (_a = req.file) === null || _a === void 0 ? void 0 : _a.path;
         const pdfDataBuffer = await fs_1.default.readFileSync(path);
         const pdfData = await (0, pdf_parse_1.default)(pdfDataBuffer);
+        const { text } = pdfData;
+        console.log(text);
+        fs_1.default.writeFile("./uploads/test.txt", text, _ => { });
         fs_1.default.unlinkSync(path);
+        res.json({ text: "yo" });
     });
     app.listen(port, () => {
         console.log(`Server is running on port ${port}`);

@@ -18,15 +18,16 @@ const audit = (transcript, track) => {
     const terms = transcript.student.terms;
     const coreCourseMapping = createCourseMapping(terms, trackRequirements.requiredCoreCourses);
     const additionalCoreCourseMapping = createCourseMapping(terms, trackRequirements.additionalCoreChoices);
-    const coreGPAInfo = calculateGPA(coreCourseMapping, terms, trackRequirements);
-    const additionalGPAInfo = calculateGPA(additionalCoreCourseMapping, terms, trackRequirements);
-    const nonCoreCourses = retrieveElectiveGPA(terms, coreCourseMapping, additionalCoreCourseMapping, trackRequirements);
+    const coreGPAInfo = calculateGPA(coreCourseMapping, terms);
+    const additionalGPAInfo = calculateGPA(additionalCoreCourseMapping, terms);
+    const nonCoreCourses = retrieveElectiveGPA(terms, coreCourseMapping, additionalCoreCourseMapping);
     coreGPAInfo.factoredCourses.sort(descendingCourseGPAComparator);
     additionalGPAInfo.factoredCourses.sort(descendingCourseGPAComparator);
     nonCoreCourses.factoredCourses.sort(descendingCourseGPAComparator);
     const incompleteRequirements = {
         requiredIncompleteCoreCourses: [],
-        requiredIncompleteElectiveCourses: []
+        requiredIncompleteElectiveCourses: [],
+        remainingAdditionalCoreClasses: trackRequirements.numberRequiredAdditionalCoreCourses
     };
     const audit = {
         coreGPAInfo: coreGPAInfo,
@@ -55,19 +56,36 @@ const computeOutstandingRequirements = (audit) => {
             delete takenCoreCourseNames[i];
         }
     }
+    const coreCourseRequirementNames = [...requiredCoursesSet];
+    let incompleteCoreCourses = [];
+    for (let i = 0; i < coreCourseRequirementNames.length; i++) {
+        for (let j = 0; j < requiredCoreCourses.length; j++) {
+            const course = requiredCoreCourses[j];
+            const cName = `${course.coursePrefix} ${course.courseNumber}`;
+            if (cName === coreCourseRequirementNames[i]) {
+                incompleteCoreCourses.push(requiredCoreCourses[j]);
+                break;
+            }
+        }
+    }
+    incompleteCoreCourses = incompleteCoreCourses.concat(coreGPAInfo.inProgressCourses);
     const additionalCoreRequirementCourseNames = takenCoreCourseNames.flat();
-    const incompleteAdditionalCoreRequirements = [];
+    const additionalCoreCourseRequirements = [];
     for (let i = 0; i < additionalCoreRequirementCourseNames.length; i++) {
         for (let j = 0; j < allCores.length; j++) {
             const course = allCores[j];
             const cName = `${course.coursePrefix} ${course.courseNumber}`;
             if (cName === additionalCoreRequirementCourseNames[i]) {
-                incompleteAdditionalCoreRequirements.push(allCores[j]);
+                additionalCoreCourseRequirements.push(allCores[j]);
                 break;
             }
         }
     }
-    outstandingRequirements.requiredIncompleteCoreCourses = incompleteAdditionalCoreRequirements;
+    const incompleteAdditionalCoreCourseRequirements = additionalCoreCourseRequirements.filter(course => course.grade == "IP");
+    console.log('testing: ', additionalCoreCourseRequirements);
+    outstandingRequirements.requiredIncompleteCoreCourses = incompleteCoreCourses;
+    outstandingRequirements.remainingAdditionalCoreClasses = outstandingRequirements.remainingAdditionalCoreClasses - additionalCoreCourseRequirements.length + incompleteAdditionalCoreCourseRequirements.length;
+    outstandingRequirements.requiredIncompleteElectiveCourses = electiveGPAInfo.inProgressCourses;
 };
 const aggregateAuditInfo = (track, audit) => {
     let needed_courses = track.numberRequiredAdditionalCoreCourses;
@@ -98,7 +116,7 @@ const aggregateAuditInfo = (track, audit) => {
 const descendingCourseGPAComparator = (a, b) => {
     return a.points >= b.points ? -1 : 1;
 };
-const retrieveElectiveGPA = (terms, coreMapping, additionalCoreMapping, track) => {
+const retrieveElectiveGPA = (terms, coreMapping, additionalCoreMapping) => {
     const nonCoreCourses = retrieveNonCoreCourses(terms, coreMapping, additionalCoreMapping);
     const electiveGPAInfo = new GPAInfo();
     nonCoreCourses.forEach((course) => {
@@ -149,7 +167,7 @@ const createCourseMapping = (terms, trackCourses) => {
     }
     return coreCourseMapping;
 };
-const calculateGPA = (mapping, terms, track) => {
+const calculateGPA = (mapping, terms) => {
     const courseGPAInfo = new GPAInfo();
     courseGPAInfo.numberCourses = mapping.length;
     for (let i = 0; i < mapping.length; i++) {

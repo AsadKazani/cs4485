@@ -25,11 +25,9 @@ function App() {
 
   let handleFile = async (e) => {
     const content = e.target.result;
-    console.log(content)
-    const res = await axios.post("http://localhost:5000", { text: content, track: track });
+    const res = await axios.post("http://localhost:5000/text", { text: content, track: track });
     setTranscript(res.data.transcript);
     setAudit(res.data.audit)
-    console.log(res.data.audit)
   };
 
   let handleChangeFile = async (file) => {
@@ -43,7 +41,8 @@ function App() {
     if(fileType == "pdf"){
       const formData = new FormData()
       formData.append("file", file)
-      const res = await axios.post("http://localhost:5000/test", formData);
+      const res = await axios.post("http://localhost:5000/pdf", formData);
+      console.log(res.data)
       //TODO: setTranscript and audit 
     }else{
       let fileData = new FileReader();

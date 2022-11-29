@@ -27,7 +27,7 @@ const main = async()=>{
         res.send("hello :)")
     })
 
-    app.post('/', (req, res)=>{
+    app.post('/text', (req, res)=>{
         const content: TextContent = req.body
         const trackName = content.track
         const transcript: Transcript = parseTextTranscript(content.text)
@@ -41,21 +41,15 @@ const main = async()=>{
 
 
 
-    // {
-    //     fieldname: 'file',
-    //     originalname: 'SSR_TSRPT_S11.pdf',
-    //     encoding: '7bit',
-    //     mimetype: 'application/pdf',
-    //     destination: 'uploads/',
-    //     filename: '9c43ecb9d868c8488866bcdb1d7ef2c7',
-    //     path: 'uploads\\9c43ecb9d868c8488866bcdb1d7ef2c7',    
-    //     size: 527961
-    //   }
-    app.post('/test', upload.single('file'), async (req, res)=>{
+    app.post('/pdf', upload.single('file'), async (req, res)=>{
         const path = req.file?.path
         const pdfDataBuffer = await fs.readFileSync(path!) 
         const pdfData = await pdf(pdfDataBuffer)
+        const {text} = pdfData
+        console.log(text)
+        fs.writeFile("./uploads/test.txt", text, _=>{})
         fs.unlinkSync(path!)
+        res.json({text: "yo"})
     })
 
     app.listen(port, ()=>{
