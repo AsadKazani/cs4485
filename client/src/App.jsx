@@ -7,6 +7,7 @@ import Transcript from "./components/transcript";
 import Dropdown from "react-bootstrap/Dropdown";
 import Form from "react-bootstrap/Form";
 import Audit from "./components/audit";
+
 Buffer.from("anything", "base64");
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
@@ -97,17 +98,22 @@ function App() {
     </div>
   }
   return (
-    <div>
+    <div className="audit-info">
       <h1>Transcript Info</h1> 
       <Transcript transcript={transcript} />
       <br />
       <h1>Audit Report</h1>
       <Audit audit={audit} transcript={transcript} track={track}/>
+      <br></br>
       <div className="upbutton">
         <Button onClick={handleResetClick} variant="outline-dark">
           Upload New File
         </Button>{" "}
-        <Button onClick={handleAudit}>Generate PDF Audit</Button>
+        <Button onClick={handleAudit} variant="dark">Generate PDF Audit</Button>
+      </div>
+
+      <div>
+       
       </div>
     </div>
   );

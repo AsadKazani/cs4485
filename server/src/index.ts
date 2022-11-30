@@ -6,6 +6,7 @@ import { Audit, audit } from './auditer/transcript-auditer'
 import pdf from 'pdf-parse'
 import multer from 'multer'
 import fs from 'fs'
+import createPDF from './pdf'
 
 interface TextContent{
     text: string; 
@@ -29,6 +30,7 @@ const main = async()=>{
 
     app.post('/text', (req, res)=>{
         const content: TextContent = req.body
+        createPDF('./input.pdf', './output.pdf');
         const trackName = content.track
         const transcript: Transcript = parseTextTranscript(content.text)
         const completedAudit: Audit = audit(transcript, trackName)
@@ -43,7 +45,7 @@ const main = async()=>{
 
     app.post('/pdf', upload.single('file'), async (req, res)=>{
         const path = req.file?.path
-        const pdfDataBuffer = await fs.readFileSync(path!) 
+        const pdfDataBuffer = await fs.readFileSync(path!)         
         const pdfData = await pdf(pdfDataBuffer)
         const {text} = pdfData
         console.log(text)

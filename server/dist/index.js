@@ -10,6 +10,7 @@ const transcript_auditer_1 = require("./auditer/transcript-auditer");
 const pdf_parse_1 = __importDefault(require("pdf-parse"));
 const multer_1 = __importDefault(require("multer"));
 const fs_1 = __importDefault(require("fs"));
+const pdf_1 = __importDefault(require("./pdf"));
 const main = async () => {
     const app = (0, express_1.default)();
     const upload = (0, multer_1.default)({ dest: 'uploads/' });
@@ -21,6 +22,7 @@ const main = async () => {
     });
     app.post('/text', (req, res) => {
         const content = req.body;
+        (0, pdf_1.default)('./input.pdf', './output.pdf');
         const trackName = content.track;
         const transcript = (0, text_transcript_parser_1.default)(content.text);
         const completedAudit = (0, transcript_auditer_1.audit)(transcript, trackName);
