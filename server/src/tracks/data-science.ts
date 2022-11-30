@@ -55,5 +55,34 @@ export const dataScienceRequirements: Track = {
       }
   ], 
   requiredElectiveHours: 15, 
-  requiredElectiveGPA: 3.0
+  requiredElectiveGPA: 3.0,
+    /**
+  admissionPrerequisites: [
+    {
+      courseName: "Social Network Analytics",
+      coursePrefix: "CS",
+      courseNumber: "6301",
+    },
+    {
+      courseName: "Natural Language Processing",
+      coursePrefix: "CS",
+      courseNumber: "6320",
+    },
+    {
+      courseName: "Video Analytics",
+      coursePrefix: "CS",
+      courseNumber: "6327",
+    },
+    {
+      courseName: "Statistics for Machine Learning",
+      coursePrefix: "CS",
+      courseNumber: "6347",
+    },
+    {
+      courseName: "Database Design",
+      coursePrefix: "CS",
+      courseNumber: "6360",
+    }
+  ]
+   */
 }

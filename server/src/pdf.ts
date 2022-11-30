@@ -2,7 +2,7 @@ const { writeFile } = require('fs/promises');
 const { PDFDocument } = require('pdf-lib');
 import fetch from 'cross-fetch';
 
-async function createPDF(input, output){
+async function createPDF(input: string, output: string){
     try{
 
         const formUrl = 'https://cs.utdallas.edu/wp-content/uploads/2020/10/DP-Traditional.pdf';
@@ -11,7 +11,7 @@ async function createPDF(input, output){
         const pdfDoc = await PDFDocument.load(formPdfBytes);
 
         const fields = pdfDoc.getForm().getFields().map((f) => f.getName());
-        console.log({ fields });
+        // console.log({ fields });
 
         const form = pdfDoc.getForm();
 
@@ -20,7 +20,7 @@ async function createPDF(input, output){
         const pdfBytes = await pdfDoc.save();
         
         await writeFile(output, pdfBytes);
-        console.log("pdf created");
+        // console.log("pdf created");
 
     } catch (err) {
         console.log(err)

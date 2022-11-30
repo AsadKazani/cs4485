@@ -12,12 +12,10 @@ async function createPDF(input, output) {
         const formPdfBytes = await (0, cross_fetch_1.default)(formUrl).then(res => res.arrayBuffer());
         const pdfDoc = await PDFDocument.load(formPdfBytes);
         const fields = pdfDoc.getForm().getFields().map((f) => f.getName());
-        console.log({ fields });
         const form = pdfDoc.getForm();
         form.getTextField('Name of Student').setText('Nick Pant');
         const pdfBytes = await pdfDoc.save();
         await writeFile(output, pdfBytes);
-        console.log("pdf created");
     }
     catch (err) {
         console.log(err);

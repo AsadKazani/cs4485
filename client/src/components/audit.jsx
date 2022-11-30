@@ -38,6 +38,7 @@ const Audit = ({audit, transcript, track})=>{
     }
   }
 
+
   const untakenOfferedAdditionalCoresCoursesJSX = untakenOfferedAdditionalCoresCourses.map((course, idx)=> <Course key={idx} info={course}/>)
 
   const notTakenCores = outstandingRequirements.requiredIncompleteCoreCourses.filter(course=>!course.grade)
@@ -50,7 +51,7 @@ const Audit = ({audit, transcript, track})=>{
 
 
   const inProgressElectivesJSX = outstandingRequirements.requiredIncompleteElectiveCourses.map((course, idx)=> <Course key={idx} info={course}/>)
-
+  console.log('courses are', electiveGPAInfo)
 
 const gpaInfo = [
   <p key = 'core'>Core GPA: {coreGPAInfo.gpa}</p>,
@@ -80,14 +81,14 @@ const completedElectiveInfo = electiveGPAInfo.factoredCourses.map((course, idx) 
       <div>
         <br></br>
         <h1>Oustanding Requirements</h1>
-        {remainingAdditionalCoreNum ? <p>Required to Take one of the following as additional Core: {offeredAdditionalCores}</p> : ""}
-        {notTakenCores.length ? <Requirements header={`${nameTokens[0]} Has To Take The Following Required Cores`} content={notTakenCoresJSX}/> : ""}
-        {inProgressCoresJSX.length ? <Requirements header={`${nameTokens[0]} Needs to Pass The Following In Progress Core Courses`} content={inProgressCoresJSX}/> : ""}
-        {inProgressElectivesJSX.length ? <Requirements header={`${nameTokens[0]} Needs to Pass The Following In Progress Elective Courses`} content={inProgressElectivesJSX}/> : ""}
-        {remainingAdditionalCoreNum == 0 ? "" : <Requirements header={`${nameTokens[0]} Needs to Take ${remainingAdditionalCoreNum} Courses Chosen From Below`} content={untakenOfferedAdditionalCoresCoursesJSX}/>}
+        {remainingAdditionalCoreNum > 0? <p>Required to Take one of the following as additional Core: {offeredAdditionalCores}</p> : ""}
+        {notTakenCores.length > 0 ? <Requirements header={`${nameTokens[0]} Has To Take The Following Required Cores`} content={notTakenCoresJSX}/> : ""}
+        {inProgressCoresJSX.length > 0 ? <Requirements header={`${nameTokens[0]} Needs to Pass The Following In Progress Core Courses`} content={inProgressCoresJSX}/> : ""}
+        {inProgressElectivesJSX.length > 0? <Requirements header={`${nameTokens[0]} Needs to Pass The Following In Progress Elective Courses`} content={inProgressElectivesJSX}/> : ""}
+        {remainingAdditionalCoreNum <= 0 ? "" : <Requirements header={`${nameTokens[0]} Needs to Take ${remainingAdditionalCoreNum} Courses Chosen From Below`} content={untakenOfferedAdditionalCoresCoursesJSX}/>}
         {/* {numElectivesNeededToTake ? <div className="acc">{nameTokens[0]} Still Needs To Take {numElectivesNeededToTake} Elective Courses</div> : ""} */}
 
-        <Requirements header={`${nameTokens[0]} Still Needs To Take ${numElectivesNeededToTake} Elective Courses`} />
+        {numElectivesNeededToTake <= 0 ? "": <Requirements header={`${nameTokens[0]} Still Needs To Take ${numElectivesNeededToTake} Elective Courses`} />}
       </div>
     </div>
   )

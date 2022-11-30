@@ -56,6 +56,6 @@ exports.dataScienceRequirements = {
         }
     ],
     requiredElectiveHours: 15,
-    requiredElectiveGPA: 3.0
+    requiredElectiveGPA: 3.0,
 };
 //# sourceMappingURL=data-science.js.map

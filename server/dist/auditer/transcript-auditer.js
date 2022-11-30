@@ -2,6 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.audit = void 0;
 const data_science_1 = require("../tracks/data-science");
+const traditional_cs_1 = require("../tracks/traditional-cs");
+const cyber_security_1 = require("../tracks/cyber-security");
+const systems_1 = require("../tracks/systems");
+const interactive_computing_1 = require("../tracks/interactive-computing");
+const intelligent_systems_1 = require("../tracks/intelligent-systems");
+const networks_and_telecommunications_1 = require("../tracks/networks-and-telecommunications");
 class GPAInfo {
     constructor() {
         this.gpa = 0.0;
@@ -82,7 +88,6 @@ const computeOutstandingRequirements = (audit) => {
         }
     }
     const incompleteAdditionalCoreCourseRequirements = additionalCoreCourseRequirements.filter(course => course.grade == "IP");
-    console.log('testing: ', additionalCoreCourseRequirements);
     outstandingRequirements.requiredIncompleteCoreCourses = incompleteCoreCourses;
     outstandingRequirements.remainingAdditionalCoreClasses = outstandingRequirements.remainingAdditionalCoreClasses - additionalCoreCourseRequirements.length + incompleteAdditionalCoreCourseRequirements.length;
     outstandingRequirements.requiredIncompleteElectiveCourses = electiveGPAInfo.inProgressCourses;
@@ -93,6 +98,7 @@ const aggregateAuditInfo = (track, audit) => {
     const { factoredCourses: coreCourses } = coreGPAInfo;
     const { factoredCourses: extraCore } = additionalCoreGPAInfo;
     const { factoredCourses: electiveCourses } = electiveGPAInfo;
+    console.log('extra core: ', electiveGPAInfo);
     while (extraCore.length && needed_courses) {
         coreCourses.push(extraCore[extraCore.length - 1]);
         needed_courses--;
@@ -101,13 +107,16 @@ const aggregateAuditInfo = (track, audit) => {
     extraCore.forEach(course => electiveCourses.push(course));
     electiveCourses.sort(descendingCourseGPAComparator);
     coreCourses.forEach(course => {
-        coreGPAInfo.attemptedPoints += course.attemptedPoints;
-        coreGPAInfo.totalPoints += course.points;
+        if (course.grade != "P") {
+            coreGPAInfo.attemptedPoints += course.attemptedPoints;
+            coreGPAInfo.totalPoints += course.points;
+        }
     });
     coreGPAInfo.gpa = coreGPAInfo.totalPoints / coreGPAInfo.attemptedPoints;
     coreGPAInfo.meetsCoreGPARequirement = coreGPAInfo.gpa >= track.requiredCoreGPA;
     electiveCourses.forEach(course => {
-        electiveGPAInfo.attemptedPoints += course.attemptedPoints;
+        if (course.grade != "P")
+            electiveGPAInfo.attemptedPoints += course.attemptedPoints;
         electiveGPAInfo.totalPoints += course.points;
     });
     electiveGPAInfo.gpa = electiveGPAInfo.totalPoints / electiveGPAInfo.attemptedPoints;
@@ -120,7 +129,7 @@ const retrieveElectiveGPA = (terms, coreMapping, additionalCoreMapping) => {
     const nonCoreCourses = retrieveNonCoreCourses(terms, coreMapping, additionalCoreMapping);
     const electiveGPAInfo = new GPAInfo();
     nonCoreCourses.forEach((course) => {
-        if (course.coursePrefix == 'CS' && course.courseNumber[0] == '6') {
+        if (course.coursePrefix == 'CS' || course.coursePrefix == 'SE' && course.courseNumber[0] == '6') {
             electiveGPAInfo.numberCourses++;
             if (course.grade == "IP") {
                 electiveGPAInfo.inProgressCourses.push(course);
@@ -183,19 +192,19 @@ const calculateGPA = (mapping, terms) => {
 const getTrackRequirements = (track) => {
     switch (track) {
         case "Networks and Telecommunications":
-            return data_science_1.dataScienceRequirements;
+            return networks_and_telecommunications_1.networksAndCommunicationsRequirements;
         case "Intelligent Systems":
-            return data_science_1.dataScienceRequirements;
+            return intelligent_systems_1.intelligentSystemsRequirement;
         case "Interactive Computing":
-            return data_science_1.dataScienceRequirements;
+            return interactive_computing_1.interactiveSystemsRequirement;
         case "Systems":
-            return data_science_1.dataScienceRequirements;
+            return systems_1.systemsRequirements;
         case "Data Science":
             return data_science_1.dataScienceRequirements;
         case "Cyber Security":
-            return data_science_1.dataScienceRequirements;
+            return cyber_security_1.cyberSecurityRequirements;
         default:
-            return data_science_1.dataScienceRequirements;
+            return traditional_cs_1.traditionanlCSRequirements;
     }
 };
 //# sourceMappingURL=transcript-auditer.js.map

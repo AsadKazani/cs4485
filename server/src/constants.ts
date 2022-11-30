@@ -9,3 +9,9 @@ export const INSTRUCTOR_LINE_PREFIX = "Instructor"
 export const END_OF_TRANSCRIPT = "End of Unofficial Transcript - UT-Dallas"
 
 export const COMPLETED_SEMESTER_PREFIX = "Academic Standing Effective" 
+
+export const TRANSFER_PREFIX = "Transfer Credit from UT Dallas Fast Track"
+
+export const END_OF_TRANSFER = "Academic Program History"
+
+export const TRANSFER_TERM_END = "Course Trans GPA"

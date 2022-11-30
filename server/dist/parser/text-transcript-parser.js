@@ -60,8 +60,55 @@ const parseInProgressCourse = (text) => {
     }
     return courses;
 };
+const handleTransferTerms = (lines) => {
+    const transferTerms = [];
+    let startIdx = -1;
+    for (let i = 0; i < lines.length; i++) {
+        if (lines[i] == constants_1.TRANSFER_PREFIX) {
+            startIdx = i + 1;
+            break;
+        }
+    }
+    if (startIdx == -1)
+        return [];
+    let graduateRecord = lines.slice(startIdx + 1);
+    while (graduateRecord.length > 0) {
+        const termCourses = [];
+        if (graduateRecord[0] == constants_1.END_OF_TRANSFER)
+            break;
+        const term = new term_1.default();
+        term.year = graduateRecord[0].split(" ")[0];
+        term.name = `Transfer Term ${graduateRecord[0].split(" ")[1]}`;
+        let endTermIdx = 0;
+        for (let i = 0; i < graduateRecord.length; i++) {
+            if (graduateRecord[i].startsWith(constants_1.TRANSFER_TERM_END)) {
+                endTermIdx = i;
+                let j = i - 1;
+                while (!graduateRecord[j].startsWith(constants_1.START_OF_TERM)) {
+                    termCourses.push(graduateRecord[j--]);
+                }
+                term.courses = parseCompletedCourses(termCourses);
+                transferTerms.push(term);
+                graduateRecord = graduateRecord.slice(endTermIdx + 1);
+            }
+        }
+    }
+    return transferTerms;
+};
+const hasRemaining = (lines) => {
+    for (let i = 0; i < lines.length; i++) {
+        if (lines[i] == constants_1.END_OF_TRANSCRIPT)
+            return false;
+        if (lines[i] == constants_1.START_OF_TERM)
+            return true;
+    }
+    return false;
+};
 const parseTerms = (lines) => {
+    console.log('before');
     const terms = [];
+    const transferTerms = handleTransferTerms(lines.concat([]));
+    console.log('after transfer');
     let startIdx = 0;
     for (let i = 0; i < lines.length; i++) {
         if (lines[i] == constants_1.START_OF_GRADUATE_RECORD) {
@@ -71,12 +118,16 @@ const parseTerms = (lines) => {
     }
     let graduateRecord = lines.slice(startIdx);
     while (graduateRecord.length > 0) {
+        console.log('stuck');
         const termCourses = [];
-        if (graduateRecord[0] == constants_1.END_OF_TRANSCRIPT)
+        if (graduateRecord[0] == constants_1.END_OF_TRANSCRIPT) {
+            console.log('hello i Reached the nd :)');
             break;
+        }
         const term = new term_1.default();
         term.year = graduateRecord[0].split(" ")[0];
         term.name = graduateRecord[0].split(" ")[1];
+        console.log(`term name: ${term.name} and term year ${term.year}`);
         let endTermIdx = 0;
         for (let i = 0; i < graduateRecord.length; i++) {
             if (graduateRecord[i].startsWith(constants_1.END_OF_TERM_PREFIX)) {
@@ -87,17 +138,23 @@ const parseTerms = (lines) => {
                 termCourses.push(graduateRecord[i - 1]);
             }
         }
-        if (!graduateRecord[endTermIdx + 1].startsWith(constants_1.COMPLETED_SEMESTER_PREFIX)) {
-            term.courses = parseInProgressCourse(termCourses);
-            terms.push(term);
-            break;
-        }
-        else {
+        if (graduateRecord[endTermIdx + 1].startsWith(constants_1.COMPLETED_SEMESTER_PREFIX)) {
             term.courses = parseCompletedCourses(termCourses);
             terms.push(term);
             graduateRecord = graduateRecord.slice(endTermIdx + 2);
         }
+        else if (hasRemaining(graduateRecord.slice(endTermIdx + 1))) {
+            term.courses = parseCompletedCourses(termCourses);
+            terms.push(term);
+            graduateRecord = graduateRecord.slice(endTermIdx + 1);
+        }
+        else {
+            term.courses = parseInProgressCourse(termCourses);
+            terms.push(term);
+            return transferTerms.concat(terms);
+        }
     }
-    return terms;
+    console.log('number of terms are: ', terms[2]);
+    return transferTerms.concat(terms);
 };
 //# sourceMappingURL=text-transcript-parser.js.map

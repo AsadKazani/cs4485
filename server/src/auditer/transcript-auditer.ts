@@ -3,6 +3,12 @@ import Transcript from "../entity/transcript";
 import { dataScienceRequirements } from "../tracks/data-science";
 import Term from "../entity/term";
 import Course from "../entity/course";
+import { traditionanlCSRequirements } from "../tracks/traditional-cs";
+import { cyberSecurityRequirements } from "../tracks/cyber-security";
+import { systemsRequirements } from "../tracks/systems";
+import { interactiveSystemsRequirement } from "../tracks/interactive-computing";
+import { intelligentSystemsRequirement } from "../tracks/intelligent-systems";
+import { networksAndCommunicationsRequirements } from "../tracks/networks-and-telecommunications";
 
 interface CourseMapping {
   requirementIdx: number;
@@ -45,6 +51,7 @@ export const audit = (transcript: Transcript, track: string): Audit => {
     trackRequirements.additionalCoreChoices
   );
 
+
   const coreGPAInfo = calculateGPA(coreCourseMapping, terms);
   const additionalGPAInfo = calculateGPA(additionalCoreCourseMapping, terms)
   const nonCoreCourses = retrieveElectiveGPA(terms, coreCourseMapping, additionalCoreCourseMapping)
@@ -65,6 +72,7 @@ export const audit = (transcript: Transcript, track: string): Audit => {
     track: trackRequirements,
     outstandingRequirements: incompleteRequirements
   }
+
   aggregateAuditInfo(trackRequirements, audit)
   computeOutstandingRequirements(audit)
   return audit
@@ -124,8 +132,6 @@ const computeOutstandingRequirements = (audit: Audit)=>{
   }
   const incompleteAdditionalCoreCourseRequirements = additionalCoreCourseRequirements.filter(course=> course.grade == "IP")
 
-  console.log('testing: ', additionalCoreCourseRequirements)
-
   outstandingRequirements.requiredIncompleteCoreCourses = incompleteCoreCourses
   outstandingRequirements.remainingAdditionalCoreClasses = outstandingRequirements.remainingAdditionalCoreClasses - additionalCoreCourseRequirements.length + incompleteAdditionalCoreCourseRequirements.length; 
   outstandingRequirements.requiredIncompleteElectiveCourses = electiveGPAInfo.inProgressCourses
@@ -141,6 +147,8 @@ const aggregateAuditInfo = (track: Track, audit: Audit)=>{
   const {factoredCourses: coreCourses} = coreGPAInfo
   const {factoredCourses: extraCore} = additionalCoreGPAInfo
   const {factoredCourses: electiveCourses} = electiveGPAInfo
+  //CAN MAYBE FIX BUG HERE
+  console.log('extra core: ', electiveGPAInfo)
   while(extraCore.length && needed_courses){
     coreCourses.push(extraCore[extraCore.length-1])
     needed_courses--
@@ -151,14 +159,17 @@ const aggregateAuditInfo = (track: Track, audit: Audit)=>{
   electiveCourses.sort(descendingCourseGPAComparator)
   
   coreCourses.forEach(course=> {
-    coreGPAInfo.attemptedPoints += course.attemptedPoints!
-    coreGPAInfo.totalPoints+= course.points!
+    if(course.grade != "P"){
+      coreGPAInfo.attemptedPoints += course.attemptedPoints!
+      coreGPAInfo.totalPoints+= course.points!
+    }
   })
 
   coreGPAInfo.gpa = coreGPAInfo.totalPoints / coreGPAInfo.attemptedPoints
   coreGPAInfo.meetsCoreGPARequirement = coreGPAInfo.gpa >= track.requiredCoreGPA
 
   electiveCourses.forEach(course=>{
+    if(course.grade != "P")
     electiveGPAInfo.attemptedPoints += course.attemptedPoints!
     electiveGPAInfo.totalPoints+= course.points!
   })
@@ -176,7 +187,7 @@ const retrieveElectiveGPA = (terms: Term[], coreMapping: CourseMapping[], additi
   const nonCoreCourses = retrieveNonCoreCourses(terms, coreMapping, additionalCoreMapping)
   const electiveGPAInfo: GPAInfo = new GPAInfo()
   nonCoreCourses.forEach((course: Course)=>{
-    if(course.coursePrefix == 'CS' && course.courseNumber[0] == '6'){
+    if(course.coursePrefix == 'CS' ||  course.coursePrefix == 'SE'&& course.courseNumber[0] == '6'){
       electiveGPAInfo.numberCourses++
       if(course.grade == "IP"){
         electiveGPAInfo.inProgressCourses.push(course)
@@ -193,13 +204,16 @@ const retrieveNonCoreCourses = (terms: Term[], coreMapping: CourseMapping[], add
   for(let i =0; i < terms.length; i++){
     mapping.push([...terms[i].courses])
   }
+
   for(let i =0; i < coreMapping.length; i++){
     delete mapping[coreMapping[i].takenCourseIdxs[0]][coreMapping[i].takenCourseIdxs[1]]
   }
+  //BUG: HERE YOU REMOVE TH#E ADDITIONAL CORE SO NLP IS GETTING REMOVED  
   for(let i =0; i < additionalCoreMapping.length; i++){
     delete mapping[additionalCoreMapping[i].takenCourseIdxs[0]][additionalCoreMapping[i].takenCourseIdxs[1]]
   }
   const flattenedMapping = mapping.flat()
+  // console.log('elective non core are: ', flattenedMapping)
   return flattenedMapping
 }
 
@@ -247,18 +261,18 @@ const calculateGPA = (mapping: CourseMapping[], terms: Term[]): GPAInfo => {
 const getTrackRequirements = (track: string): Track => {
   switch (track) {
     case "Networks and Telecommunications":
-      return dataScienceRequirements;
+      return networksAndCommunicationsRequirements;
     case "Intelligent Systems":
-      return dataScienceRequirements;
+      return intelligentSystemsRequirement;
     case "Interactive Computing":
-      return dataScienceRequirements;
+      return interactiveSystemsRequirement;
     case "Systems":
-      return dataScienceRequirements;
+      return systemsRequirements;
     case "Data Science":
       return dataScienceRequirements;
     case "Cyber Security":
-      return dataScienceRequirements;
+      return cyberSecurityRequirements;
     default:
-      return dataScienceRequirements; // Traditional computer science
+      return traditionanlCSRequirements; // Traditional computer science
   }
 };
