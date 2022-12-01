@@ -104,11 +104,21 @@ const hasRemaining = (lines) => {
     }
     return false;
 };
+const nextTermStartIdx = (lines, idx) => {
+    while (idx < lines.length) {
+        if (lines[idx] == constants_1.END_OF_TRANSCRIPT)
+            return -1;
+        if (lines[idx] == constants_1.START_OF_TERM)
+            return idx - 1;
+        if (lines[idx] == constants_1.ALTERNATE_START_OF_TERM)
+            return idx - 1;
+        idx++;
+    }
+    return -1;
+};
 const parseTerms = (lines) => {
-    console.log('before');
     const terms = [];
     const transferTerms = handleTransferTerms(lines.concat([]));
-    console.log('after transfer');
     let startIdx = 0;
     for (let i = 0; i < lines.length; i++) {
         if (lines[i] == constants_1.START_OF_GRADUATE_RECORD) {
@@ -118,10 +128,8 @@ const parseTerms = (lines) => {
     }
     let graduateRecord = lines.slice(startIdx);
     while (graduateRecord.length > 0) {
-        console.log('stuck');
         const termCourses = [];
         if (graduateRecord[0] == constants_1.END_OF_TRANSCRIPT) {
-            console.log('hello i Reached the nd :)');
             break;
         }
         const term = new term_1.default();
@@ -135,18 +143,25 @@ const parseTerms = (lines) => {
                 break;
             }
             if (graduateRecord[i].startsWith(constants_1.INSTRUCTOR_LINE_PREFIX)) {
-                termCourses.push(graduateRecord[i - 1]);
+                if (graduateRecord[i - 1].startsWith(constants_1.COURSE_TOPIC)) {
+                    termCourses.push(graduateRecord[i - 2]);
+                }
+                else if (graduateRecord[i - 1].startsWith(constants_1.START_OF_TERM)) {
+                    let j = i - 1;
+                    while (!graduateRecord[j].startsWith(constants_1.UNOFFICIAL_TRANSCRIPT_PREF)) {
+                        j--;
+                    }
+                    termCourses.push(graduateRecord[j - 1]);
+                }
+                else
+                    termCourses.push(graduateRecord[i - 1]);
             }
         }
-        if (graduateRecord[endTermIdx + 1].startsWith(constants_1.COMPLETED_SEMESTER_PREFIX)) {
+        if (graduateRecord[endTermIdx + 1].startsWith(constants_1.COMPLETED_SEMESTER_PREFIX) || hasRemaining(graduateRecord.slice(endTermIdx + 1))) {
             term.courses = parseCompletedCourses(termCourses);
             terms.push(term);
-            graduateRecord = graduateRecord.slice(endTermIdx + 2);
-        }
-        else if (hasRemaining(graduateRecord.slice(endTermIdx + 1))) {
-            term.courses = parseCompletedCourses(termCourses);
-            terms.push(term);
-            graduateRecord = graduateRecord.slice(endTermIdx + 1);
+            const nextTerm = nextTermStartIdx(graduateRecord, endTermIdx);
+            graduateRecord = graduateRecord.slice(nextTerm);
         }
         else {
             term.courses = parseInProgressCourse(termCourses);
@@ -154,7 +169,6 @@ const parseTerms = (lines) => {
             return transferTerms.concat(terms);
         }
     }
-    console.log('number of terms are: ', terms[2]);
     return transferTerms.concat(terms);
 };
 //# sourceMappingURL=text-transcript-parser.js.map

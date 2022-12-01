@@ -98,7 +98,6 @@ const aggregateAuditInfo = (track, audit) => {
     const { factoredCourses: coreCourses } = coreGPAInfo;
     const { factoredCourses: extraCore } = additionalCoreGPAInfo;
     const { factoredCourses: electiveCourses } = electiveGPAInfo;
-    console.log('extra core: ', electiveGPAInfo);
     while (extraCore.length && needed_courses) {
         coreCourses.push(extraCore[extraCore.length - 1]);
         needed_courses--;
@@ -106,6 +105,7 @@ const aggregateAuditInfo = (track, audit) => {
     }
     extraCore.forEach(course => electiveCourses.push(course));
     electiveCourses.sort(descendingCourseGPAComparator);
+    electiveGPAInfo.inProgressCourses = electiveGPAInfo.inProgressCourses.concat(additionalCoreGPAInfo.inProgressCourses);
     coreCourses.forEach(course => {
         if (course.grade != "P") {
             coreGPAInfo.attemptedPoints += course.attemptedPoints;

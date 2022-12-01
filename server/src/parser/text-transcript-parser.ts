@@ -1,5 +1,7 @@
 import {
+  ALTERNATE_START_OF_TERM,
   COMPLETED_SEMESTER_PREFIX,
+  COURSE_TOPIC,
   END_OF_TERM_PREFIX,
   END_OF_TRANSCRIPT,
   END_OF_TRANSFER,
@@ -8,6 +10,7 @@ import {
   START_OF_TERM,
   TRANSFER_PREFIX,
   TRANSFER_TERM_END,
+  UNOFFICIAL_TRANSCRIPT_PREF,
 } from "../constants";
 import Student from "../entity/student";
 import Term from "../entity/term";
@@ -111,11 +114,20 @@ const hasRemaining = (lines: string[])=>{
   return false; 
 }
 
+const nextTermStartIdx = (lines: string[], idx: number)=>{
+  while(idx < lines.length){
+    if(lines[idx] == END_OF_TRANSCRIPT) return -1
+    if(lines[idx] == START_OF_TERM) return idx -1; 
+    if(lines[idx] == ALTERNATE_START_OF_TERM) return idx -1
+    idx++
+  }
+  return -1
+}
+
+
 const parseTerms = (lines: string[]): Term[] => {
-  console.log('before')
   const terms: Term[] = [];
   const transferTerms = handleTransferTerms(lines.concat([]))
-  console.log('after transfer')
   let startIdx = 0;
   for (let i = 0; i < lines.length; i++) {
     if (lines[i] == START_OF_GRADUATE_RECORD) {
@@ -127,10 +139,8 @@ const parseTerms = (lines: string[]): Term[] => {
 
   let graduateRecord = lines.slice(startIdx);
   while (graduateRecord.length > 0) {
-    console.log('stuck')
     const termCourses = [];
     if (graduateRecord[0] == END_OF_TRANSCRIPT){
-      console.log('hello i Reached the nd :)')
       break
     }
     const term = new Term();
@@ -144,28 +154,34 @@ const parseTerms = (lines: string[]): Term[] => {
         break;
       }
       if (graduateRecord[i].startsWith(INSTRUCTOR_LINE_PREFIX)) {
-        termCourses.push(graduateRecord[i - 1]);
+        if(graduateRecord[i-1].startsWith(COURSE_TOPIC)){
+          termCourses.push(graduateRecord[i-2])
+        }else if(graduateRecord[i-1].startsWith(START_OF_TERM)){
+          let j = i-1
+          while(!graduateRecord[j].startsWith(UNOFFICIAL_TRANSCRIPT_PREF)){
+            j--
+          }
+          termCourses.push(graduateRecord[j-1])
+        }
+        else termCourses.push(graduateRecord[i - 1]);
       }
     }
-    if (graduateRecord[endTermIdx + 1].startsWith(COMPLETED_SEMESTER_PREFIX)) {
+    if (graduateRecord[endTermIdx + 1].startsWith(COMPLETED_SEMESTER_PREFIX) || hasRemaining(graduateRecord.slice(endTermIdx + 1))) {
       term.courses = parseCompletedCourses(termCourses);
       terms.push(term);
-      graduateRecord = graduateRecord.slice(endTermIdx + 2);
-    }else if(hasRemaining(graduateRecord.slice(endTermIdx + 1))){
-      term.courses = parseCompletedCourses(termCourses);
-      terms.push(term);
-      graduateRecord = graduateRecord.slice(endTermIdx + 1);
-    }
-    else {
+      const nextTerm = nextTermStartIdx(graduateRecord, endTermIdx)
+      graduateRecord = graduateRecord.slice(nextTerm);
+    }else {
       term.courses = parseInProgressCourse(termCourses);
       terms.push(term);
       return transferTerms.concat(terms);
     }
   }
 
-  console.log('number of terms are: ', terms[2])
   return transferTerms.concat(terms);
 };
 
 
-//Elective Courses: CS 6320, CS 6326, CS 6334, CS 6367 
+// Core Courses:  CS 6V81 
+
+// Elective Courses: CS 6320, CS 6364, CS 6378, CS 6384, CS 6V98, CS 6V98  

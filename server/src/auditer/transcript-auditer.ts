@@ -147,8 +147,7 @@ const aggregateAuditInfo = (track: Track, audit: Audit)=>{
   const {factoredCourses: coreCourses} = coreGPAInfo
   const {factoredCourses: extraCore} = additionalCoreGPAInfo
   const {factoredCourses: electiveCourses} = electiveGPAInfo
-  //CAN MAYBE FIX BUG HERE
-  console.log('extra core: ', electiveGPAInfo)
+
   while(extraCore.length && needed_courses){
     coreCourses.push(extraCore[extraCore.length-1])
     needed_courses--
@@ -157,6 +156,8 @@ const aggregateAuditInfo = (track: Track, audit: Audit)=>{
   
   extraCore.forEach(course=> electiveCourses.push(course))
   electiveCourses.sort(descendingCourseGPAComparator)
+
+  electiveGPAInfo.inProgressCourses = electiveGPAInfo.inProgressCourses.concat(additionalCoreGPAInfo.inProgressCourses)
   
   coreCourses.forEach(course=> {
     if(course.grade != "P"){
@@ -208,12 +209,10 @@ const retrieveNonCoreCourses = (terms: Term[], coreMapping: CourseMapping[], add
   for(let i =0; i < coreMapping.length; i++){
     delete mapping[coreMapping[i].takenCourseIdxs[0]][coreMapping[i].takenCourseIdxs[1]]
   }
-  //BUG: HERE YOU REMOVE TH#E ADDITIONAL CORE SO NLP IS GETTING REMOVED  
   for(let i =0; i < additionalCoreMapping.length; i++){
     delete mapping[additionalCoreMapping[i].takenCourseIdxs[0]][additionalCoreMapping[i].takenCourseIdxs[1]]
   }
   const flattenedMapping = mapping.flat()
-  // console.log('elective non core are: ', flattenedMapping)
   return flattenedMapping
 }
 
@@ -276,3 +275,8 @@ const getTrackRequirements = (track: string): Track => {
       return traditionanlCSRequirements; // Traditional computer science
   }
 };
+
+
+// Core Courses: CS 6V81 --> WRONG IS: 6320 
+
+// Elective Courses: CS 6320, CS 6V98  

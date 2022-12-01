@@ -15,3 +15,9 @@ export const TRANSFER_PREFIX = "Transfer Credit from UT Dallas Fast Track"
 export const END_OF_TRANSFER = "Academic Program History"
 
 export const TRANSFER_TERM_END = "Course Trans GPA"
+
+export const COURSE_TOPIC = "Course Topic:"
+
+export const UNOFFICIAL_TRANSCRIPT_PREF = "Unofficial Transcript - UT-Dallas"
+
+export const ALTERNATE_START_OF_TERM = "Course Attempted Earned Grade Points"
