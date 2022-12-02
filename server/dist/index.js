@@ -11,6 +11,7 @@ const pdf_parse_1 = __importDefault(require("pdf-parse"));
 const multer_1 = __importDefault(require("multer"));
 const fs_1 = __importDefault(require("fs"));
 const pdf_1 = __importDefault(require("./pdf"));
+const os_1 = __importDefault(require("os"));
 const pdf_transcript_parser_1 = __importDefault(require("./parser/pdf-transcript-parser"));
 const main = async () => {
     const app = (0, express_1.default)();
@@ -30,7 +31,7 @@ const main = async () => {
             transcript: transcript,
             audit: completedAudit,
         };
-        (0, pdf_1.default)(content.track, "./output.pdf", degreeAudit);
+        (0, pdf_1.default)(trackName, os_1.default.tmpdir() + '/output.pdf', degreeAudit);
         res.json(degreeAudit);
     });
     app.post("/pdf", upload.single("file"), async (req, res) => {
@@ -49,8 +50,14 @@ const main = async () => {
             transcript: transcript,
             audit: completedAudit,
         };
-        (0, pdf_1.default)(content.track, "./output.pdf", degreeAudit);
+        (0, pdf_1.default)(trackName, os_1.default.tmpdir() + '/output.pdf', degreeAudit);
         res.json(degreeAudit);
+    });
+    app.get('/pdfDownload', (_, res) => {
+        res.download(os_1.default.tmpdir() + '/output.pdf');
+    });
+    app.get('/pdfFile', (_, res) => {
+        res.sendFile(os_1.default.tmpdir() + '/output.pdf');
     });
     app.listen(port, () => {
         console.log(`Server is running on port ${port}`);

@@ -7,7 +7,7 @@ import pdf from "pdf-parse";
 import multer from "multer";
 import fs from "fs";
 import createPDF from "./pdf";
-import { transcode } from "buffer";
+import os from 'os'
 import parsePDFTranscript from "./parser/pdf-transcript-parser";
 
 interface TextContent {
@@ -40,7 +40,7 @@ const main = async () => {
       transcript: transcript,
       audit: completedAudit,
     };
-    createPDF(content.track, "./output.pdf", degreeAudit);
+    createPDF(trackName, os.tmpdir() + '/output.pdf', degreeAudit);
     res.json(degreeAudit);
   });
 
@@ -59,11 +59,17 @@ const main = async () => {
       transcript: transcript,
       audit: completedAudit,
     };
-    createPDF(content.track, "./output.pdf", degreeAudit);
+    createPDF(trackName, os.tmpdir() + '/output.pdf', degreeAudit);
     res.json(degreeAudit);
-
-    //res.send("oogabooga");
   });
+
+  app.get('/pdfDownload', (_, res)=>{
+    res.download(os.tmpdir() + '/output.pdf')
+  })
+
+  app.get('/pdfFile', (_, res)=>{
+    res.sendFile(os.tmpdir() + '/output.pdf')
+  })
 
   app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

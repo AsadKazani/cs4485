@@ -15,13 +15,11 @@ function App() {
   const [transcript, setTranscript] = useState(null);
   const [audit, setAudit] = useState(null);
   const [track, setTrack] = useState("Select Track");
-  const [showAudit, setShowAudit] = useState(false);
 
   const handleResetClick = () => {
     setTranscript(null);
     setAudit(null);
     setTrack("Select Track");
-    setShowAudit(false);
   };
 
   let handleFile = async (e) => {
@@ -58,10 +56,13 @@ function App() {
     }
   };
 
-  const handleAudit = () => {
-    setShowAudit(true);
-    console.log(audit);
+  const handleAudit = async () => {
+    window.open('http://localhost:5000/pdfFile')
   };
+
+  const handleAuditDownload = async()=>{
+    window.open('http://localhost:5000/pdfDownload')
+  }
 
   if (!transcript) {
     return (
@@ -118,9 +119,6 @@ function App() {
     );
   }
 
-  if (showAudit) {
-    return <div>display audit info</div>;
-  }
   return (
     <div className="audit-info">
       <h1>Transcript Info</h1>
@@ -135,6 +133,9 @@ function App() {
         </Button>{" "}
         <Button onClick={handleAudit} variant="dark">
           Generate PDF Audit
+        </Button>
+        <Button onClick={handleAuditDownload} variant="dark">
+          Download PDF Audit
         </Button>
       </div>
 

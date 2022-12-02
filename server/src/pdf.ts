@@ -1,219 +1,138 @@
-import { DegreeAudit } from "./index";
-const { writeFile } = require("fs/promises");
-const { PDFDocument } = require("pdf-lib");
-import fetch from "cross-fetch";
-import Course from "./entity/course";
-import Transcript from "./entity/transcript";
-import Term from "./entity/term";
-import e from "express";
-const fs = require("fs");
 
-async function createPDF(
-  track: string,
-  output: string,
-  degreeAudit: DegreeAudit
-) {
-  try {
-    let formUrl = "";
+import { writeFile } from 'fs/promises'
+import { PDFDocument } from 'pdf-lib';
+import fetch from 'cross-fetch';
+import { DegreeAudit } from './index';
+import Course from './entity/course';
+import { FieldsMapping } from './pdf-mapping/pdf-mapping';
+import Transcript from './entity/transcript';
+import { dataScienceMapping } from './pdf-mapping/data-science';
+import { PDFFieldMapping } from './pdf-mapping/pdf-mapping';
+import { networkAndTelecomMapping } from './pdf-mapping/networks-telecom';
+import { intelligentSystemMapping } from './pdf-mapping/intelligent-systems';
+import { interactiveComputingMapping } from './pdf-mapping/interactive-computing';
+import { systemMapping } from './pdf-mapping/system';
+import { cyberSecurityMapping } from './pdf-mapping/cyber-security';
+import { traditionCSMapping } from './pdf-mapping/traditional-cs';
 
-    if (track == "Traditional Computer Science") {
-      formUrl =
-        "https://cs.utdallas.edu/wp-content/uploads/2020/10/DP-Traditional.pdf";
-    }
-    if (track == "Data Science") {
-      formUrl =
-        "https://cs.utdallas.edu/wp-content/uploads/2020/10/DP-Data-Science.pdf";
-    }
-    if (track == "Cyber Security") {
-      formUrl =
-        "https://cs.utdallas.edu/wp-content/uploads/2022/05/Cyber-Security.pdf";
-    }
-    if (track == "Networks and Telecommunications") {
-      formUrl =
-        "https://cs.utdallas.edu/wp-content/uploads/2020/10/DP-Networks-Telecommunication.pdf";
-    }
-    if (track == "Intelligent Systems") {
-      formUrl =
-        "https://cs.utdallas.edu/wp-content/uploads/2020/10/DP-Intelligent-Systems.pdf";
-    }
-    if (track == "Interactive Computing") {
-      formUrl =
-        "https://cs.utdallas.edu/wp-content/uploads/2020/10/DP-Interactive-Computing.pdf";
-    }
-    if (track == "Systems") {
-      formUrl =
-        "https://cs.utdallas.edu/wp-content/uploads/2020/10/DP-Systems.pdf";
-    }
 
-    const formPdfBytes = await fetch(formUrl).then((res) => res.arrayBuffer());
-    const pdfDoc = await PDFDocument.load(formPdfBytes);
 
-    const fields = pdfDoc
-      .getForm()
-      .getFields()
-      .map((f: any) => f.getName());
-    //console.log({ fields });
+async function createPDF(track: string, output: string, degreeAudit: DegreeAudit){
+    try{
 
-    fs.writeFile("./fields.txt", fields.toString(), (err: any) => {
-      if (err) throw err;
-    });
-    const form = pdfDoc.getForm();
-    if (track == "Data Science") {
-      form
-        .getTextField("Name of Student")
-        .setText(degreeAudit.transcript.student.name);
-      form
-        .getTextField("Student ID Number")
-        .setText(degreeAudit.transcript.student.id);
-      form
-        .getTextField("Semester Admitted to Program")
-        .setText(
-          degreeAudit.transcript.student.terms[0].year +
-            degreeAudit.transcript.student.terms[0].name
-        );
-      console.log(degreeAudit.transcript.student.terms[0].year);
+        const formUrl = getTrackPDFURL(track);
+        const formPdfBytes = await fetch(formUrl).then(res => res.arrayBuffer())
 
-      for (
-        let i = 0;
-        i < degreeAudit.audit.coreGPAInfo.factoredCourses.length;
-        i++
-      ) {
-        if (
-          degreeAudit.audit.coreGPAInfo.factoredCourses[i].courseNumber ==
-          "6313"
-        ) {
-          form
-            .getTextField("CS 6313.2")
-            .setText(degreeAudit.audit.coreGPAInfo.factoredCourses[i].grade);
-        }
-        if (
-          degreeAudit.audit.coreGPAInfo.factoredCourses[i].courseNumber ==
-          "6350"
-        ) {
-          form
-            .getTextField("CS 6350.2")
-            .setText(degreeAudit.audit.coreGPAInfo.factoredCourses[i].grade);
-        }
-        if (
-          degreeAudit.audit.coreGPAInfo.factoredCourses[i].courseNumber ==
-          "6363"
-        ) {
-          form
-            .getTextField("CS 6363.2")
-            .setText(degreeAudit.audit.coreGPAInfo.factoredCourses[i].grade);
-        }
-        if (
-          degreeAudit.audit.coreGPAInfo.factoredCourses[i].courseNumber ==
-          "6375"
-        ) {
-          form
-            .getTextField("CS 6375.2")
-            .setText(degreeAudit.audit.coreGPAInfo.factoredCourses[i].grade);
-        }
-        if (
-          degreeAudit.audit.coreGPAInfo.factoredCourses[i].courseNumber ==
-          "6301"
-        ) {
-          form
-            .getTextField("CS 6301.0.2")
-            .setText(degreeAudit.audit.coreGPAInfo.factoredCourses[i].grade);
-        }
-        if (
-          degreeAudit.audit.coreGPAInfo.factoredCourses[i].courseNumber ==
-          "6320"
-        ) {
-          form
-            .getTextField("CS 6320.0.2")
-            .setText(degreeAudit.audit.coreGPAInfo.factoredCourses[i].grade);
-        }
-        if (
-          degreeAudit.audit.coreGPAInfo.factoredCourses[i].courseNumber ==
-          "6327"
-        ) {
-          form
-            .getTextField("CS 6327.0.2")
-            .setText(degreeAudit.audit.coreGPAInfo.factoredCourses[i].grade);
-        }
-        if (
-          degreeAudit.audit.coreGPAInfo.factoredCourses[i].courseNumber ==
-          "6347"
-        ) {
-          form
-            .getTextField("CS 6347.0.2")
-            .setText(degreeAudit.audit.coreGPAInfo.factoredCourses[i].grade);
-        }
-        if (
-          degreeAudit.audit.coreGPAInfo.factoredCourses[i].courseNumber ==
-          "6360"
-        ) {
-          const term: Term = getTerm(
-            degreeAudit.audit.coreGPAInfo.factoredCourses[i],
-            degreeAudit
-          );
-          if (
-            term.name.startsWith("Transfer") &&
-            term.name.includes("Spring")
-          ) {
-            form
-              .getTextField("CS 6360.0.0")
-              .setText(`${term.year.substring(2)}U`);
-          } else {
-          }
-          form
-            .getTextField("CS 6360.0.2")
-            .setText(degreeAudit.audit.coreGPAInfo.factoredCourses[i].grade);
-        }
-        /*
-                if(degreeAudit.audit..factoredCourses[i].courseNumber == "5303"){
-                    form.getTextField('UTD Admission Prerequisites Course Semester Waiver GradeRow7_3.0').setText("1")
-                }
-                if(degreeAudit.audit..factoredCourses[i].courseNumber == "5330"){
-                    form.getTextField('UTD Admission Prerequisites Course Semester Waiver GradeRow7_3.0').setText("1")
-                }
-                if(degreeAudit.audit..factoredCourses[i].courseNumber == "5333"){
-                    form.getTextField('UTD Admission Prerequisites Course Semester Waiver GradeRow7_3.0').setText("1")
-                }
-                if(degreeAudit.audit..factoredCourses[i].courseNumber == "5343"){
-                    form.getTextField('UTD Admission Prerequisites Course Semester Waiver GradeRow7_3.0').setText("1")
-                }
-                if(degreeAudit.audit..factoredCourses[i].courseNumber == "5348"){
-                    form.getTextField('UTD Admission Prerequisites Course Semester Waiver GradeRow7_3.0').setText("1")
-                }
-                if(degreeAudit.audit..factoredCourses[i].courseNumber == "3341"){
-                    form.getTextField('UTD Admission Prerequisites Course Semester Waiver GradeRow7_3.0').setText("1")
-                }*/
-      }
+        const pdfDoc = await PDFDocument.load(formPdfBytes);
 
-      console.log(degreeAudit.audit.electiveGPAInfo.factoredCourses);
+        const fields = pdfDoc.getForm().getFields().map((f, i) => f.getName());
+        const fields2 = pdfDoc.getForm().getFields().map((f, i) => `Field#${i} -->${f.getName()}`);
+        await writeFile('testing.txt', fields2.join('\n'))
+        const form = pdfDoc.getForm();
+        if(track == "Cyber Security"){
+          form.getTextField('NameOfStudent').setText(degreeAudit.transcript.student.name);
+          form.getTextField('StudentID').setText(degreeAudit.transcript.student.id)
+        }else{
+          form.getTextField('Name of Student').setText(degreeAudit.transcript.student.name);
+          form.getTextField('Student ID Number').setText(degreeAudit.transcript.student.id)
+        }
+        
+        const fc = degreeAudit.audit.coreGPAInfo.factoredCourses.concat(degreeAudit.audit.coreGPAInfo.inProgressCourses).concat(degreeAudit.audit.additionalCoreGPAInfo.factoredCourses)
+        const pdfFieldsMappingObj = getPDFFieldsMapping(track)
+        const coreIDXs = pdfFieldsMappingObj.coreMapping
+        const electiveIdxs = pdfFieldsMappingObj.electiveMapping
+        for(let i = 0; i < fc.length; i++){
+          const mappingIdx = getCoreIdx(fc[i], coreIDXs)
+          if(mappingIdx == -1) continue
+          const info = coreIDXs[mappingIdx]
+          const term = getTerm(degreeAudit.transcript, fc[i])
+          form.getTextField(fields[info.idxs[0]]).setText(term?.name.startsWith("Transfer")?`${term?.name.substring(14)} ${term?.year}`: `${term?.name} ${term?.year}`)
+          form.getTextField(fields[info.idxs[1]]).setText(term?.name.startsWith("Transfer")? "F/T" : "")
+          form.getTextField(fields[info.idxs[2]]).setText(fc[i].grade)
+        }        
+
+        const ec = degreeAudit.audit.electiveGPAInfo.factoredCourses.concat(degreeAudit.audit.electiveGPAInfo.inProgressCourses)
+
+        const dupElectiveIdxs = electiveIdxs.concat([]) 
+        let i = 0
+        let j=0
+        while(i < dupElectiveIdxs.length && j < ec.length){
+          const mIdxs = dupElectiveIdxs[i++]
+          const course = ec[j++]
+          const term = getTerm(degreeAudit.transcript,course)
+          form.getTextField(fields[mIdxs[0]]).setText(course.courseName)
+          form.getTextField(fields[mIdxs[1]]).setText(`${course.coursePrefix} ${course.courseNumber}`)
+          form.getTextField(fields[mIdxs[2]]).setText(term.name.startsWith("Transfer")?`${term?.name.substring(14)} ${term?.year}`: `${term?.name} ${term?.year}`)
+          form.getTextField(fields[mIdxs[3]]).setText(term.name.startsWith("Transfer")? "F/T" : "")
+          form.getTextField(fields[mIdxs[4]]).setText(course.grade)
+        }
+        
+
+        const pdfBytes = await pdfDoc.save();
+        
+        await writeFile(output, pdfBytes);
+    } catch (err) {
     }
 
-    const pdfBytes = await pdfDoc.save();
-
-    await writeFile(output, pdfBytes);
-    console.log("pdf created");
-    console.log(track);
-  } catch (err) {
-    console.log(err);
-  }
 }
 
-const getTerm = (course: Course, degreeAudit: DegreeAudit): Term => {
-  const transcript = degreeAudit.transcript;
-  const terms = transcript.student.terms;
-  for (let i = 0; i < terms.length; i++) {
-    const term = terms[i];
-    const courses = term.courses;
-    for (let j = 0; j < courses.length; j++) {
-      const curr = courses[j];
-      if (
-        curr.courseName == course.courseName &&
-        curr.coursePrefix == course.coursePrefix
-      )
-        return term;
+const getTerm = (transcript: Transcript, course: Course)=>{
+  for(let i = 0; i < transcript.student.terms.length; i++){
+    for(let j = 0; j < transcript.student.terms[i].courses.length; j++){
+      const c = transcript.student.terms[i].courses[j]
+      if(c.coursePrefix == course.coursePrefix && c.courseNumber == course.courseNumber){
+        return transcript.student.terms[i]
+      }
     }
   }
+  return transcript.student.terms[0]
+}
 
-  return terms[0];
-};
+const getCoreIdx = (course: Course, coreIDXs: FieldsMapping[]) =>{
+  const currentName = `${course.coursePrefix} ${course.courseNumber}`
+  for(let i = 0; i < coreIDXs.length; i++){
+    if(coreIDXs[i].name == currentName){
+      return i
+    }
+  }
+  return -1
+}
 
+const getTrackPDFURL = (track: string): string => {
+    switch (track) {
+      case "Networks and Telecommunications":
+        return 'https://cs.utdallas.edu/wp-content/uploads/2020/10/DP-Networks-Telecommunication.pdf';
+      case "Intelligent Systems":
+        return 'https://cs.utdallas.edu/wp-content/uploads/2020/10/DP-Intelligent-Systems.pdf';
+      case "Interactive Computing":
+        return 'https://cs.utdallas.edu/wp-content/uploads/2020/10/DP-Interactive-Computing.pdf';
+      case "Systems":
+        return 'https://cs.utdallas.edu/wp-content/uploads/2020/10/DP-Systems.pdf';
+      case "Data Science":
+        return 'https://cs.utdallas.edu/wp-content/uploads/2020/10/DP-Data-Science.pdf';
+      case "Cyber Security":
+        return 'https://cs.utdallas.edu/wp-content/uploads/2022/05/Cyber-Security.pdf';
+      default:
+        return "https://cs.utdallas.edu/wp-content/uploads/2020/10/DP-Traditional.pdf"; // Traditional computer science
+    }
+}
+
+const getPDFFieldsMapping = (track: string): PDFFieldMapping => {
+  switch (track) {
+    case "Networks and Telecommunications":
+      return networkAndTelecomMapping;
+    case "Intelligent Systems":
+      return intelligentSystemMapping;
+    case "Interactive Computing":
+      return interactiveComputingMapping;
+    case "Systems":
+      return systemMapping;
+    case "Data Science":
+      return dataScienceMapping
+    case "Cyber Security":
+      return cyberSecurityMapping;
+    default:
+      return traditionCSMapping; // Traditional computer science
+  }
+}
 export default createPDF;
