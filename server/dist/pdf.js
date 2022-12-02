@@ -35,7 +35,7 @@ async function createPDF(track, output, degreeAudit) {
         const pdfDoc = await PDFDocument.load(formPdfBytes);
         const fields = pdfDoc.getForm().getFields().map((f) => f.getName());
         console.log({ fields });
-        fs.writeFile('./fields.txt', fields.toString(), (err) => {
+        fs.writeFile('./fields.txt', fields.join("\n"), (err) => {
             if (err)
                 throw err;
         });
@@ -79,6 +79,22 @@ async function createPDF(track, output, degreeAudit) {
                     }
                     form.getTextField('CS 6360.0.2').setText(degreeAudit.audit.coreGPAInfo.factoredCourses[i].grade);
                 }
+            }
+            let classVals = ["CS 6327.1.0.0.0",
+                "CS 6327.1.0.0.1",
+                "CS 6327.1.0.0.2",
+                "CS 6327.1.0.0.3",
+                "CS 6327.1.0.0.4",
+                "CS 6327.1.0.0.5",
+                "CS 6327.1.0.0.6",
+                "CS 6327.1.0.0.7",];
+            let col1 = ['CS 6327.1.0.1', 'CS 6347.1.0', 'CS 6360.1.0', 'CS 6301.2.0', 'CS 6320.2.2'];
+            let col2 = ['CS 6327.1.1', 'CS 6347.1.1', 'CS 6360.1.1', 'CS 6301.2.1', 'CS 6320.2.1'];
+            let col3 = ['CS 6327.1.2', 'CS 6347.1.2', 'CS 6360.1.2', 'CS 6301.2.2', 'CS 6320.2.2'];
+            for (let i = 0; i < degreeAudit.audit.electiveGPAInfo.factoredCourses.length; i++) {
+                form.getTextField((i + 1).toString()).setText(degreeAudit.audit.electiveGPAInfo.factoredCourses[i].courseName);
+                form.getTextField(classVals[i]).setText(degreeAudit.audit.electiveGPAInfo.factoredCourses[i].coursePrefix + " " + degreeAudit.audit.electiveGPAInfo.factoredCourses[i].courseNumber);
+                form.getTextField(col3[i]).setText(degreeAudit.audit.electiveGPAInfo.factoredCourses[i].grade);
             }
             console.log(degreeAudit.audit.electiveGPAInfo.factoredCourses);
         }

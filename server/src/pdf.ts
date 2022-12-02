@@ -45,7 +45,7 @@ async function createPDF(track: string, output: string, degreeAudit: DegreeAudit
         const fields = pdfDoc.getForm().getFields().map((f: any) => f.getName());
         console.log({ fields });
 
-        fs.writeFile('./fields.txt', fields.toString(), (err: any) => {
+        fs.writeFile('./fields.txt', fields.join("\n"), (err: any) => {
           
             if (err) throw err;
         })
@@ -91,8 +91,8 @@ async function createPDF(track: string, output: string, degreeAudit: DegreeAudit
                     }
                     form.getTextField('CS 6360.0.2').setText(degreeAudit.audit.coreGPAInfo.factoredCourses[i].grade)
                 }
-                /*
-                if(degreeAudit.audit..factoredCourses[i].courseNumber == "5303"){
+                
+                 /*if(degreeAudit.audit.electiveGPAInfo.factoredCourses[i].courseNumber == "5303"){
                     form.getTextField('UTD Admission Prerequisites Course Semester Waiver GradeRow7_3.0').setText("1")
                 }
                 if(degreeAudit.audit..factoredCourses[i].courseNumber == "5330"){
@@ -109,11 +109,49 @@ async function createPDF(track: string, output: string, degreeAudit: DegreeAudit
                 }
                 if(degreeAudit.audit..factoredCourses[i].courseNumber == "3341"){
                     form.getTextField('UTD Admission Prerequisites Course Semester Waiver GradeRow7_3.0').setText("1")
-                }*/
+                } */
+            }
 
+            let classVals = ["CS 6327.1.0.0.0",
+                    "CS 6327.1.0.0.1",
+                    "CS 6327.1.0.0.2",
+                    "CS 6327.1.0.0.3",
+                    "CS 6327.1.0.0.4",
+                    "CS 6327.1.0.0.5",
+                    "CS 6327.1.0.0.6",
+                    "CS 6327.1.0.0.7",]
+
+            let col1 = ['CS 6327.1.0.1', 'CS 6347.1.0','CS 6360.1.0', 'CS 6301.2.0','CS 6320.2.2']
+            let col2 = ['CS 6327.1.1','CS 6347.1.1','CS 6360.1.1','CS 6301.2.1','CS 6320.2.1']
+            let col3 =['CS 6327.1.2','CS 6347.1.2','CS 6360.1.2','CS 6301.2.2','CS 6320.2.2']
+
+
+            for(let i = 0; i < degreeAudit.audit.electiveGPAInfo.factoredCourses.length; i++){
                 
-
-
+                form.getTextField((i+1).toString()).setText(degreeAudit.audit.electiveGPAInfo.factoredCourses[i].courseName);
+                form.getTextField(classVals[i]).setText(degreeAudit.audit.electiveGPAInfo.factoredCourses[i].coursePrefix + " " + degreeAudit.audit.electiveGPAInfo.factoredCourses[i].courseNumber);
+                form.getTextField(col3[i]).setText(degreeAudit.audit.electiveGPAInfo.factoredCourses[i].grade);
+                 /*
+                form.getTextField('CS 6301.2.0').setText("test1"); //4
+                form.getTextField('CS 6301.2.1').setText("test2");
+                form.getTextField('CS 6301.2.2').setText("test3");
+                
+                form.getTextField('CS 6360.1.0').setText("test1"); //3
+                form.getTextField('CS 6360.1.1').setText("test2");
+                form.getTextField('CS 6360.1.2').setText("test3");
+                
+                form.getTextField('CS 6320.2.0').setText("test1"); //5
+                form.getTextField('CS 6320.2.1').setText("test2");
+                form.getTextField('CS 6320.2.2').setText("test3");
+                
+                form.getTextField('CS 6327.1.0.1').setText("test1"); //1
+                form.getTextField('CS 6327.1.1').setText("test2");
+                form.getTextField('CS 6327.1.2').setText("test3");
+                
+                form.getTextField('CS 6347.1.0').setText("test1"); //2
+                form.getTextField('CS 6347.1.1').setText("test2");
+                form.getTextField('CS 6347.1.2').setText("test3");*/
+    
             }
 
             console.log(degreeAudit.audit.electiveGPAInfo.factoredCourses);
