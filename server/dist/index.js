@@ -32,6 +32,9 @@ const main = async () => {
         (0, pdf_1.default)(content.track, './output.pdf', degreeAudit);
         res.json(degreeAudit);
     });
+    app.get('/file', (req, res) => {
+        res.download('./output.pdf');
+    });
     app.post('/pdf', upload.single('file'), async (req, res) => {
         var _a;
         const path = (_a = req.file) === null || _a === void 0 ? void 0 : _a.path;

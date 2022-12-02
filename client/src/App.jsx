@@ -52,8 +52,8 @@ function App() {
     }
   };
 
-  const handleAudit = ()=>{
-    setShowAudit(true)
+  const handleAudit = async ()=>{
+    const res = await axios.get("http://localhost:5000/file");
     console.log(audit)
   }
 

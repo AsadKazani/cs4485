@@ -8,6 +8,7 @@ import multer from 'multer'
 import fs from 'fs'
 import createPDF from './pdf'
 
+
 interface TextContent{
     text: string; 
     track: string
@@ -38,11 +39,13 @@ const main = async()=>{
             transcript: transcript, 
             audit: completedAudit
         }
-        createPDF(content.track, './output.pdf', degreeAudit,);
+        createPDF(content.track, './output.pdf', degreeAudit);
         res.json(degreeAudit)
     })
 
-
+    app.get('/file', (req, res) => {
+        res.download('./output.pdf');
+    })
 
     app.post('/pdf', upload.single('file'), async (req, res)=>{
         const path = req.file?.path

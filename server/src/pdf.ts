@@ -3,18 +3,12 @@ const { writeFile } = require('fs/promises');
 const { PDFDocument } = require('pdf-lib');
 import fetch from 'cross-fetch';
 import Course from './entity/course';
-import Transcript from './entity/transcript';
 import Term from './entity/term';
-import e from 'express';
 const fs = require('fs')
 
 async function createPDF(track: string, output: string, degreeAudit: DegreeAudit){
 
-
-
-    
     try{
-
         let formUrl = "";
         
         if (track == "Traditional Computer Science"){
@@ -50,6 +44,9 @@ async function createPDF(track: string, output: string, degreeAudit: DegreeAudit
             if (err) throw err;
         })
         const form = pdfDoc.getForm();
+
+
+
         if (track == "Data Science"){
             form.getTextField('Name of Student').setText(degreeAudit.transcript.student.name);
             form.getTextField('Student ID Number').setText(degreeAudit.transcript.student.id);
@@ -60,70 +57,162 @@ async function createPDF(track: string, output: string, degreeAudit: DegreeAudit
                 
                 if(degreeAudit.audit.coreGPAInfo.factoredCourses[i].courseNumber == "6313"){
                     form.getTextField('CS 6313.2').setText(degreeAudit.audit.coreGPAInfo.factoredCourses[i].grade)
+                    const term: Term = getTerm(degreeAudit.audit.coreGPAInfo.factoredCourses[i], degreeAudit)
+                    parseTerm(term, 'CS 6313.0', form);
+                    if (term.name.startsWith("Transfer")){
+                        form.getTextField('CS 6313.1').setText('F/T')
+                    }
                 }
                 if(degreeAudit.audit.coreGPAInfo.factoredCourses[i].courseNumber == "6350"){
                     form.getTextField('CS 6350.2').setText(degreeAudit.audit.coreGPAInfo.factoredCourses[i].grade)
+                    const term: Term = getTerm(degreeAudit.audit.coreGPAInfo.factoredCourses[i], degreeAudit)
+                    parseTerm(term, 'CS 6350.0', form);
+                    if (term.name.startsWith("Transfer")){
+                        form.getTextField('CS 6350.1').setText('F/T')
+                    }
                 }
                 if(degreeAudit.audit.coreGPAInfo.factoredCourses[i].courseNumber == "6363"){
                     form.getTextField('CS 6363.2').setText(degreeAudit.audit.coreGPAInfo.factoredCourses[i].grade)
+                    const term: Term = getTerm(degreeAudit.audit.coreGPAInfo.factoredCourses[i], degreeAudit)
+                    parseTerm(term, 'CS 6363.0', form);
+                    if (term.name.startsWith("Transfer")){
+                        form.getTextField('CS 6363.1').setText('F/T')
+                    }
                 }
                 if(degreeAudit.audit.coreGPAInfo.factoredCourses[i].courseNumber == "6375"){
                     form.getTextField('CS 6375.2').setText(degreeAudit.audit.coreGPAInfo.factoredCourses[i].grade)
+                    const term: Term = getTerm(degreeAudit.audit.coreGPAInfo.factoredCourses[i], degreeAudit)
+                    parseTerm(term, 'CS 6375.0', form);
+                    if (term.name.startsWith("Transfer")){
+                        form.getTextField('CS 6375.1').setText('F/T')
+                    }
+
                 }
                 if(degreeAudit.audit.coreGPAInfo.factoredCourses[i].courseNumber == "6301"){
                     form.getTextField('CS 6301.0.2').setText(degreeAudit.audit.coreGPAInfo.factoredCourses[i].grade)
+                    const term: Term = getTerm(degreeAudit.audit.coreGPAInfo.factoredCourses[i], degreeAudit)
+                    parseTerm(term, 'CS 6301.0.0', form);
+                    if (term.name.startsWith("Transfer")){
+                        form.getTextField('CS 6301.0.1').setText('F/T')
+                    }
                 }
                 if(degreeAudit.audit.coreGPAInfo.factoredCourses[i].courseNumber == "6320"){
                     form.getTextField('CS 6320.0.2').setText(degreeAudit.audit.coreGPAInfo.factoredCourses[i].grade)
+                    const term: Term = getTerm(degreeAudit.audit.coreGPAInfo.factoredCourses[i], degreeAudit)
+                    parseTerm(term, 'CS 6320.0.0', form);
+                    if (term.name.startsWith("Transfer")){
+                        form.getTextField('CS 6320.0.1').setText('F/T')
+                    }
                 }
                 if(degreeAudit.audit.coreGPAInfo.factoredCourses[i].courseNumber == "6327"){
                     form.getTextField('CS 6327.0.2').setText(degreeAudit.audit.coreGPAInfo.factoredCourses[i].grade)
+                    const term: Term = getTerm(degreeAudit.audit.coreGPAInfo.factoredCourses[i], degreeAudit)
+                    parseTerm(term, 'CS 6327.0.0', form);
+                    if (term.name.startsWith("Transfer")){
+                        form.getTextField('CS 6327.0.1').setText('F/T')
+                    }
                 }
                 if(degreeAudit.audit.coreGPAInfo.factoredCourses[i].courseNumber == "6347"){
                     form.getTextField('CS 6347.0.2').setText(degreeAudit.audit.coreGPAInfo.factoredCourses[i].grade)
+                    const term: Term = getTerm(degreeAudit.audit.coreGPAInfo.factoredCourses[i], degreeAudit)
+                    parseTerm(term, 'CS 6347.0.0', form);
+                    if (term.name.startsWith("Transfer")){
+                        form.getTextField('CS 6347.0.1').setText('F/T')
+                    }
                 }
                 if(degreeAudit.audit.coreGPAInfo.factoredCourses[i].courseNumber == "6360"){
-                    const term: Term = getTerm(degreeAudit.audit.coreGPAInfo.factoredCourses[i], degreeAudit)
-                    if(term.name.startsWith("Transfer") && term.name.includes('Spring')){
-                        form.getTextField('CS 6360.0.0').setText(`${term.year.substring(2)}U`)
-                    }else{
-
-                    }
                     form.getTextField('CS 6360.0.2').setText(degreeAudit.audit.coreGPAInfo.factoredCourses[i].grade)
+                    const term: Term = getTerm(degreeAudit.audit.coreGPAInfo.factoredCourses[i], degreeAudit)
+                    parseTerm(term, 'CS 6360.0.0', form);
+                    if (term.name.startsWith("Transfer")){
+                        form.getTextField('CS 6360.0.1').setText('F/T')
+                    }
                 }
                 
-                 /*if(degreeAudit.audit.electiveGPAInfo.factoredCourses[i].courseNumber == "5303"){
-                    form.getTextField('UTD Admission Prerequisites Course Semester Waiver GradeRow7_3.0').setText("1")
-                }
-                if(degreeAudit.audit..factoredCourses[i].courseNumber == "5330"){
-                    form.getTextField('UTD Admission Prerequisites Course Semester Waiver GradeRow7_3.0').setText("1")
-                }
-                if(degreeAudit.audit..factoredCourses[i].courseNumber == "5333"){
-                    form.getTextField('UTD Admission Prerequisites Course Semester Waiver GradeRow7_3.0').setText("1")
-                }
-                if(degreeAudit.audit..factoredCourses[i].courseNumber == "5343"){
-                    form.getTextField('UTD Admission Prerequisites Course Semester Waiver GradeRow7_3.0').setText("1")
-                }
-                if(degreeAudit.audit..factoredCourses[i].courseNumber == "5348"){
-                    form.getTextField('UTD Admission Prerequisites Course Semester Waiver GradeRow7_3.0').setText("1")
-                }
-                if(degreeAudit.audit..factoredCourses[i].courseNumber == "3341"){
-                    form.getTextField('UTD Admission Prerequisites Course Semester Waiver GradeRow7_3.0').setText("1")
-                } */
             }
 
-            let classVals = ["CS 6327.1.0.0.0",
-                    "CS 6327.1.0.0.1",
-                    "CS 6327.1.0.0.2",
-                    "CS 6327.1.0.0.3",
-                    "CS 6327.1.0.0.4",
-                    "CS 6327.1.0.0.5",
-                    "CS 6327.1.0.0.6",
-                    "CS 6327.1.0.0.7",]
+            for(let i = 0; i < degreeAudit.audit.coreGPAInfo.inProgressCourses.length; i++){
+                
+                if(degreeAudit.audit.coreGPAInfo.inProgressCourses[i].courseNumber == "6313"){
+                    form.getTextField('CS 6313.2').setText(degreeAudit.audit.coreGPAInfo.inProgressCourses[i].grade)
+                    const term: Term = getTerm(degreeAudit.audit.coreGPAInfo.factoredCourses[i], degreeAudit)
+                    parseTerm(term, 'CS 6313.0', form);
+                    if (term.name.startsWith("Transfer")){
+                        form.getTextField('CS 6313.1').setText('F/T')
+                    }
+                }
+                if(degreeAudit.audit.coreGPAInfo.inProgressCourses[i].courseNumber == "6350"){
+                    form.getTextField('CS 6350.2').setText(degreeAudit.audit.coreGPAInfo.inProgressCourses[i].grade)
+                    const term: Term = getTerm(degreeAudit.audit.coreGPAInfo.factoredCourses[i], degreeAudit)
+                    parseTerm(term, 'CS 6350.0', form);
+                    if (term.name.startsWith("Transfer")){
+                        form.getTextField('CS 6350.1').setText('F/T')
+                    }
+                }
+                
+                if(degreeAudit.audit.coreGPAInfo.inProgressCourses[i].courseNumber == "6363"){
+                    form.getTextField('CS 6363.2').setText(degreeAudit.audit.coreGPAInfo.inProgressCourses[i].grade)
+                    const term: Term = getTerm(degreeAudit.audit.coreGPAInfo.factoredCourses[i], degreeAudit)
+                    parseTerm(term, 'CS 6363.0', form);
+                    if (term.name.startsWith("Transfer")){
+                        form.getTextField('CS 6363.1').setText('F/T')
+                    }
+                }
+                if(degreeAudit.audit.coreGPAInfo.inProgressCourses[i].courseNumber == "6375"){
+                    form.getTextField('CS 6375.2').setText(degreeAudit.audit.coreGPAInfo.inProgressCourses[i].grade)
+                    const term: Term = getTerm(degreeAudit.audit.coreGPAInfo.factoredCourses[i], degreeAudit)
+                    parseTerm(term, 'CS 6375.0', form);
+                    if (term.name.startsWith("Transfer")){
+                        form.getTextField('CS 6375.1').setText('F/T')
+                    }
+                }
+                if(degreeAudit.audit.coreGPAInfo.inProgressCourses[i].courseNumber == "6301"){
+                    form.getTextField('CS 6301.0.2').setText(degreeAudit.audit.coreGPAInfo.inProgressCourses[i].grade)
+                    const term: Term = getTerm(degreeAudit.audit.coreGPAInfo.factoredCourses[i], degreeAudit)
+                    parseTerm(term, 'CS 6301.0.0', form);
+                    if (term.name.startsWith("Transfer")){
+                        form.getTextField('CS 6301.0.1').setText('F/T')
+                    }
+                }
+                if(degreeAudit.audit.coreGPAInfo.inProgressCourses[i].courseNumber == "6320"){
+                    form.getTextField('CS 6320.0.2').setText(degreeAudit.audit.coreGPAInfo.inProgressCourses[i].grade)
+                    const term: Term = getTerm(degreeAudit.audit.coreGPAInfo.factoredCourses[i], degreeAudit)
+                    parseTerm(term, 'CS 6320.0.0', form);
+                    if (term.name.startsWith("Transfer")){
+                        form.getTextField('CS 6320.0.1').setText('F/T')
+                    }
+                }
+                if(degreeAudit.audit.coreGPAInfo.inProgressCourses[i].courseNumber == "6327"){
+                    form.getTextField('CS 6327.0.2').setText(degreeAudit.audit.coreGPAInfo.inProgressCourses[i].grade)
+                    const term: Term = getTerm(degreeAudit.audit.coreGPAInfo.factoredCourses[i], degreeAudit)
+                    parseTerm(term, 'CS 6327.0.0', form);
+                    if (term.name.startsWith("Transfer")){
+                        form.getTextField('CS 6327.0.1').setText('F/T')
+                    }
+                }
+                if(degreeAudit.audit.coreGPAInfo.inProgressCourses[i].courseNumber == "6347"){
+                    form.getTextField('CS 6347.0.2').setText(degreeAudit.audit.coreGPAInfo.inProgressCourses[i].grade)
+                    const term: Term = getTerm(degreeAudit.audit.coreGPAInfo.factoredCourses[i], degreeAudit)
+                    parseTerm(term, 'CS 6347.0.0', form);
+                    if (term.name.startsWith("Transfer")){
+                        form.getTextField('CS 6347.0.1').setText('F/T')
+                    }
+                }
+                if(degreeAudit.audit.coreGPAInfo.inProgressCourses[i].courseNumber == "6360"){
+                    form.getTextField('CS 6360.0.2').setText(degreeAudit.audit.coreGPAInfo.inProgressCourses[i].grade)
+                    const term: Term = getTerm(degreeAudit.audit.coreGPAInfo.inProgressCourses[i], degreeAudit)
+                    parseTerm(term, 'CS 6360.0.0', form);
+                    if (term.name.startsWith("Transfer")){
+                        form.getTextField('CS 6360.0.1').setText('F/T')
+                    }
+                }
+                
+            }
 
-            let col1 = ['CS 6327.1.0.1', 'CS 6347.1.0','CS 6360.1.0', 'CS 6301.2.0','CS 6320.2.2']
-            let col2 = ['CS 6327.1.1','CS 6347.1.1','CS 6360.1.1','CS 6301.2.1','CS 6320.2.1']
-            let col3 =['CS 6327.1.2','CS 6347.1.2','CS 6360.1.2','CS 6301.2.2','CS 6320.2.2']
+            let classVals = ["CS 6327.1.0.0.0","CS 6327.1.0.0.1","CS 6327.1.0.0.2","CS 6327.1.0.0.3","CS 6327.1.0.0.4","CS 6327.1.0.0.5","CS 6327.1.0.0.6","CS 6327.1.0.0.7",]
+            let col1 = ['CS 6327.1.0.1', 'CS 6347.1.0','CS 6360.1.0', 'CS 6301.2.0','CS 6320.2.2',"CS 6347.2.0","CS 6360.2.0.0","CS 6360.2.0.1"]
+            let col2 = ['CS 6327.1.1','CS 6347.1.1','CS 6360.1.1','CS 6301.2.1','CS 6320.2.1',"CS 6347.2.1","CS 6360.2.1.0","CS 6360.2.1.1"]
+            let col3 =['CS 6327.1.2','CS 6347.1.2','CS 6360.1.2','CS 6301.2.2','CS 6320.2.2',"CS 6347.2.2","CS 6360.2.2.0","CS 6360.2.2.1"]
 
 
             for(let i = 0; i < degreeAudit.audit.electiveGPAInfo.factoredCourses.length; i++){
@@ -131,34 +220,29 @@ async function createPDF(track: string, output: string, degreeAudit: DegreeAudit
                 form.getTextField((i+1).toString()).setText(degreeAudit.audit.electiveGPAInfo.factoredCourses[i].courseName);
                 form.getTextField(classVals[i]).setText(degreeAudit.audit.electiveGPAInfo.factoredCourses[i].coursePrefix + " " + degreeAudit.audit.electiveGPAInfo.factoredCourses[i].courseNumber);
                 form.getTextField(col3[i]).setText(degreeAudit.audit.electiveGPAInfo.factoredCourses[i].grade);
-                 /*
-                form.getTextField('CS 6301.2.0').setText("test1"); //4
-                form.getTextField('CS 6301.2.1').setText("test2");
-                form.getTextField('CS 6301.2.2').setText("test3");
-                
-                form.getTextField('CS 6360.1.0').setText("test1"); //3
-                form.getTextField('CS 6360.1.1').setText("test2");
-                form.getTextField('CS 6360.1.2').setText("test3");
-                
-                form.getTextField('CS 6320.2.0').setText("test1"); //5
-                form.getTextField('CS 6320.2.1').setText("test2");
-                form.getTextField('CS 6320.2.2').setText("test3");
-                
-                form.getTextField('CS 6327.1.0.1').setText("test1"); //1
-                form.getTextField('CS 6327.1.1').setText("test2");
-                form.getTextField('CS 6327.1.2').setText("test3");
-                
-                form.getTextField('CS 6347.1.0').setText("test1"); //2
-                form.getTextField('CS 6347.1.1').setText("test2");
-                form.getTextField('CS 6347.1.2').setText("test3");*/
-    
+
+                const term: Term = getTerm(degreeAudit.audit.electiveGPAInfo.factoredCourses[i], degreeAudit)
+                if(term.name.startsWith("Transfer")){
+                    form.getTextField(col2[i]).setText('F/T')
+                }
+
+                parseTerm(term, col1[i], form);
             }
 
-            console.log(degreeAudit.audit.electiveGPAInfo.factoredCourses);
-            
-        }
-        
+            for(let i = degreeAudit.audit.electiveGPAInfo.factoredCourses.length; i < degreeAudit.audit.electiveGPAInfo.inProgressCourses.length + degreeAudit.audit.electiveGPAInfo.factoredCourses.length; i++){
+                form.getTextField((i+1).toString()).setText(degreeAudit.audit.electiveGPAInfo.inProgressCourses[i].courseName);
+                form.getTextField(classVals[i]).setText(degreeAudit.audit.electiveGPAInfo.factoredCourses[i].coursePrefix + " " + degreeAudit.audit.electiveGPAInfo.factoredCourses[i].courseNumber);
+                form.getTextField(col3[i]).setText(degreeAudit.audit.electiveGPAInfo.factoredCourses[i].grade);
 
+                const term: Term = getTerm(degreeAudit.audit.electiveGPAInfo.factoredCourses[i], degreeAudit)
+                if(term.name.startsWith("Transfer")){
+                    form.getTextField(col2[i]).setText('F/T')
+                }
+                parseTerm(term, col1[i], form);
+            }
+
+        }
+  
         const pdfBytes = await pdfDoc.save();
         
         await writeFile(output, pdfBytes);
@@ -184,6 +268,24 @@ const getTerm = (course: Course, degreeAudit: DegreeAudit): Term=>{
     }
 
     return terms[0]
+}
+
+const parseTerm = (term: Term, box: String, form: any) => {
+    if(term.name.startsWith("Transfer") && term.name.includes('Spring')){
+        form.getTextField(box).setText(`${term.year.substring(2)}U`)
+    }
+
+    if(term.name.startsWith("Transfer") && term.name.includes('Fall')){
+        form.getTextField(box).setText(`${term.year.substring(2)}U`)
+    }
+
+    if(term.name.includes("Spring")){
+        form.getTextField(box).setText(`${term.year.substring(2)}S`)
+    }
+
+    if(term.name.includes("Fall")){
+        form.getTextField(box).setText(`${term.year.substring(2)}F`)
+    }
 }
 
 export default createPDF;
