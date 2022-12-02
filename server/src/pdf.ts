@@ -2,9 +2,17 @@ import { DegreeAudit,  } from './index';
 const { writeFile } = require('fs/promises');
 const { PDFDocument } = require('pdf-lib');
 import fetch from 'cross-fetch';
+import Course from './entity/course';
+import Transcript from './entity/transcript';
+import Term from './entity/term';
+import e from 'express';
 const fs = require('fs')
 
 async function createPDF(track: string, output: string, degreeAudit: DegreeAudit){
+
+
+
+    
     try{
 
         let formUrl = "";
@@ -41,7 +49,6 @@ async function createPDF(track: string, output: string, degreeAudit: DegreeAudit
           
             if (err) throw err;
         })
-
         const form = pdfDoc.getForm();
         if (track == "Data Science"){
             form.getTextField('Name of Student').setText(degreeAudit.transcript.student.name);
@@ -76,6 +83,12 @@ async function createPDF(track: string, output: string, degreeAudit: DegreeAudit
                     form.getTextField('CS 6347.0.2').setText(degreeAudit.audit.coreGPAInfo.factoredCourses[i].grade)
                 }
                 if(degreeAudit.audit.coreGPAInfo.factoredCourses[i].courseNumber == "6360"){
+                    const term: Term = getTerm(degreeAudit.audit.coreGPAInfo.factoredCourses[i], degreeAudit)
+                    if(term.name.startsWith("Transfer") && term.name.includes('Spring')){
+                        form.getTextField('CS 6360.0.0').setText(`${term.year.substring(2)}U`)
+                    }else{
+
+                    }
                     form.getTextField('CS 6360.0.2').setText(degreeAudit.audit.coreGPAInfo.factoredCourses[i].grade)
                 }
                 /*
@@ -118,6 +131,21 @@ async function createPDF(track: string, output: string, degreeAudit: DegreeAudit
         console.log(err)
     }
 
+}
+
+const getTerm = (course: Course, degreeAudit: DegreeAudit): Term=>{
+    const transcript = degreeAudit.transcript
+    const terms = transcript.student.terms
+    for(let i = 0; i < terms.length; i++){
+        const term = terms[i]
+        const courses = term.courses
+        for(let j=0; j < courses.length; j++){
+            const curr = courses[j]
+            if(curr.courseName == course.courseName && curr.coursePrefix == course.coursePrefix) return term
+        }
+    }
+
+    return terms[0]
 }
 
 export default createPDF;

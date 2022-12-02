@@ -71,6 +71,12 @@ async function createPDF(track, output, degreeAudit) {
                     form.getTextField('CS 6347.0.2').setText(degreeAudit.audit.coreGPAInfo.factoredCourses[i].grade);
                 }
                 if (degreeAudit.audit.coreGPAInfo.factoredCourses[i].courseNumber == "6360") {
+                    const term = getTerm(degreeAudit.audit.coreGPAInfo.factoredCourses[i], degreeAudit);
+                    if (term.name.startsWith("Transfer") && term.name.includes('Spring')) {
+                        form.getTextField('CS 6360.0.0').setText(`${term.year.substring(2)}U`);
+                    }
+                    else {
+                    }
                     form.getTextField('CS 6360.0.2').setText(degreeAudit.audit.coreGPAInfo.factoredCourses[i].grade);
                 }
             }
@@ -85,5 +91,19 @@ async function createPDF(track, output, degreeAudit) {
         console.log(err);
     }
 }
+const getTerm = (course, degreeAudit) => {
+    const transcript = degreeAudit.transcript;
+    const terms = transcript.student.terms;
+    for (let i = 0; i < terms.length; i++) {
+        const term = terms[i];
+        const courses = term.courses;
+        for (let j = 0; j < courses.length; j++) {
+            const curr = courses[j];
+            if (curr.courseName == course.courseName && curr.coursePrefix == course.coursePrefix)
+                return term;
+        }
+    }
+    return terms[0];
+};
 exports.default = createPDF;
 //# sourceMappingURL=pdf.js.map
