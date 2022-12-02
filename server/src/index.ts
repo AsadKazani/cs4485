@@ -13,7 +13,7 @@ interface TextContent{
     track: string
 }
 
-interface DegreeAudit{
+export interface DegreeAudit{
     transcript: Transcript; 
     audit: Audit; 
 }
@@ -30,7 +30,7 @@ const main = async()=>{
 
     app.post('/text', (req, res)=>{
         const content: TextContent = req.body
-        createPDF('./input.pdf', './output.pdf');
+        
         const trackName = content.track
         const transcript: Transcript = parseTextTranscript(content.text)
         const completedAudit: Audit = audit(transcript, trackName)
@@ -38,6 +38,7 @@ const main = async()=>{
             transcript: transcript, 
             audit: completedAudit
         }
+        createPDF(content.track, './output.pdf', degreeAudit,);
         res.json(degreeAudit)
     })
 

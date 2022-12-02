@@ -22,7 +22,6 @@ const main = async () => {
     });
     app.post('/text', (req, res) => {
         const content = req.body;
-        (0, pdf_1.default)('./input.pdf', './output.pdf');
         const trackName = content.track;
         const transcript = (0, text_transcript_parser_1.default)(content.text);
         const completedAudit = (0, transcript_auditer_1.audit)(transcript, trackName);
@@ -30,6 +29,7 @@ const main = async () => {
             transcript: transcript,
             audit: completedAudit
         };
+        (0, pdf_1.default)(content.track, './output.pdf', degreeAudit);
         res.json(degreeAudit);
     });
     app.post('/pdf', upload.single('file'), async (req, res) => {
