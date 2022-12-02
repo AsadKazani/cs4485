@@ -8,6 +8,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import Form from "react-bootstrap/Form";
 import Audit from "./components/audit";
 
+
 Buffer.from("anything", "base64");
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
@@ -23,6 +24,8 @@ function App() {
     setTrack('Select Track')
     setShowAudit(false)
   };
+
+  
 
   let handleFile = async (e) => {
     const content = e.target.result;
@@ -53,7 +56,8 @@ function App() {
   };
 
   const handleAudit = async ()=>{
-    const res = await axios.get("http://localhost:5000/file");
+    const res = await axios.get("http://localhost:5000/DownloadFile");
+    window.open('http://localhost:5000/DownloadFIle');
     console.log(audit)
   }
 
@@ -110,6 +114,7 @@ function App() {
           Upload New File
         </Button>{" "}
         <Button onClick={handleAudit} variant="dark">Generate PDF Audit</Button>
+        
       </div>
 
       <div>
