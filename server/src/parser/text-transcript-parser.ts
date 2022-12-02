@@ -136,7 +136,6 @@ const parseTerms = (lines: string[]): Term[] => {
     }
   }
 
-
   let graduateRecord = lines.slice(startIdx);
   while (graduateRecord.length > 0) {
     const termCourses = [];
@@ -159,7 +158,7 @@ const parseTerms = (lines: string[]): Term[] => {
         }else if(graduateRecord[i-1].startsWith(START_OF_TERM)){
           let j = i-1
           while(!graduateRecord[j].startsWith(UNOFFICIAL_TRANSCRIPT_PREF)){
-            j--
+            j--;
           }
           termCourses.push(graduateRecord[j-1])
         }

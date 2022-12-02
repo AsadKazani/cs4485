@@ -13,49 +13,55 @@ window.Buffer = window.Buffer || require("buffer").Buffer;
 
 function App() {
   const [transcript, setTranscript] = useState(null);
-  const [audit, setAudit] = useState(null)
-  const [track, setTrack] = useState('Select Track')
-  const [showAudit, setShowAudit] = useState(false)
+  const [audit, setAudit] = useState(null);
+  const [track, setTrack] = useState("Select Track");
+  const [showAudit, setShowAudit] = useState(false);
 
   const handleResetClick = () => {
     setTranscript(null);
-    setAudit(null)
-    setTrack('Select Track')
-    setShowAudit(false)
+    setAudit(null);
+    setTrack("Select Track");
+    setShowAudit(false);
   };
 
   let handleFile = async (e) => {
     const content = e.target.result;
-    const res = await axios.post("http://localhost:5000/text", { text: content, track: track });
+    const res = await axios.post("http://localhost:5000/text", {
+      text: content,
+      track: track,
+    });
     setTranscript(res.data.transcript);
-    setAudit(res.data.audit)
+    setAudit(res.data.audit);
   };
 
   let handleChangeFile = async (file) => {
-    if(track === 'Select Track'){
-      alert("Need to Select Track and Then Upload File") 
-      return
+    if (track === "Select Track") {
+      alert("Need to Select Track and Then Upload File");
+      return;
     }
-    const {name} = file 
-    const nameTokens = name.split('.')
-    const fileType = nameTokens[nameTokens.length -1 ]
-    if(fileType == "pdf"){
-      const formData = new FormData()
-      formData.append("file", file)
+    const { name } = file;
+    const nameTokens = name.split(".");
+    const fileType = nameTokens[nameTokens.length - 1];
+    if (fileType == "pdf") {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("track", track);
       const res = await axios.post("http://localhost:5000/pdf", formData);
-      console.log(res.data)
-      //TODO: setTranscript and audit 
-    }else{
+      console.log(res.data);
+      setTranscript(res.data.transcript);
+      setAudit(res.data.audit);
+      //TODO: setTranscript and audit
+    } else {
       let fileData = new FileReader();
       fileData.onloadend = handleFile;
       fileData.readAsText(file);
     }
   };
 
-  const handleAudit = ()=>{
-    setShowAudit(true)
-    console.log(audit)
-  }
+  const handleAudit = () => {
+    setShowAudit(true);
+    console.log(audit);
+  };
 
   if (!transcript) {
     return (
@@ -77,13 +83,33 @@ function App() {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item onClick = {()=>setTrack('Networks and Telecommunications')}>Networks and Telecommunications</Dropdown.Item>
-                <Dropdown.Item onClick = {()=>setTrack('Intelligent Systems')}>Intelligent Systems</Dropdown.Item>
-                <Dropdown.Item onClick = {()=>setTrack('Interactive Computing')}>Interactive Computing</Dropdown.Item>
-                <Dropdown.Item onClick = {()=>setTrack('Systems')}>Systems</Dropdown.Item>
-                <Dropdown.Item onClick = {()=>setTrack('Data Science')}>Data Science</Dropdown.Item>
-                <Dropdown.Item onClick = {()=>setTrack('Cyber Security')}>Cyber Security</Dropdown.Item>
-                <Dropdown.Item onClick = {()=>setTrack('Traditional Computer Science')}>Traditional Computer Science</Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => setTrack("Networks and Telecommunications")}
+                >
+                  Networks and Telecommunications
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => setTrack("Intelligent Systems")}>
+                  Intelligent Systems
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => setTrack("Interactive Computing")}
+                >
+                  Interactive Computing
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => setTrack("Systems")}>
+                  Systems
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => setTrack("Data Science")}>
+                  Data Science
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => setTrack("Cyber Security")}>
+                  Cyber Security
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => setTrack("Traditional Computer Science")}
+                >
+                  Traditional Computer Science
+                </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </span>
@@ -92,29 +118,27 @@ function App() {
     );
   }
 
-  if(showAudit){
-    return <div>
-      display audit info
-    </div>
+  if (showAudit) {
+    return <div>display audit info</div>;
   }
   return (
     <div className="audit-info">
-      <h1>Transcript Info</h1> 
+      <h1>Transcript Info</h1>
       <Transcript transcript={transcript} />
       <br />
       <h1>Audit Report</h1>
-      <Audit audit={audit} transcript={transcript} track={track}/>
+      <Audit audit={audit} transcript={transcript} track={track} />
       <br></br>
       <div className="upbutton">
         <Button onClick={handleResetClick} variant="outline-dark">
           Upload New File
         </Button>{" "}
-        <Button onClick={handleAudit} variant="dark">Generate PDF Audit</Button>
+        <Button onClick={handleAudit} variant="dark">
+          Generate PDF Audit
+        </Button>
       </div>
 
-      <div>
-       
-      </div>
+      <div></div>
     </div>
   );
 }
