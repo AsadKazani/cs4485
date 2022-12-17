@@ -39,6 +39,7 @@ const parseCompletedCourses = (text) => {
         course.earnedPoints = Number(tokens[length - 3]);
         course.attemptedPoints = Number(tokens[length - 4]);
         course.courseName = tokens.slice(2, length - 4).join(" ");
+        course.courseName = course.courseName.length ? course.courseName : "NO COURSE NAME FOUND";
         courses.push(course);
     }
     return courses;
@@ -56,6 +57,7 @@ const parseInProgressCourse = (text) => {
         course.earnedPoints = Number(tokens[length - 2]);
         course.attemptedPoints = Number(tokens[length - 3]);
         course.courseName = tokens.slice(2, length - 3).join(" ");
+        course.courseName = course.courseName.length ? course.courseName : "NO COURSE NAME FOUND";
         courses.push(course);
     }
     return courses;
@@ -116,6 +118,13 @@ const nextTermStartIdx = (lines, idx) => {
     }
     return -1;
 };
+const hasLetterGrade = (lines) => {
+    const line = lines[0];
+    const tokens = line.split(' ');
+    const grade = tokens[tokens.length - 2];
+    console.log('grade is :_)');
+    return grade[0] >= 'A' && grade[0] <= 'Z';
+};
 const parseTerms = (lines) => {
     const terms = [];
     const transferTerms = handleTransferTerms(lines.concat([]));
@@ -157,7 +166,11 @@ const parseTerms = (lines) => {
                     termCourses.push(graduateRecord[i - 1]);
             }
         }
-        if (graduateRecord[endTermIdx + 1].startsWith(constants_1.COMPLETED_SEMESTER_PREFIX) || hasRemaining(graduateRecord.slice(endTermIdx + 1))) {
+        if (hasLetterGrade(termCourses)) {
+            console.log(`${term.name} ${term.courses} HAS LETTER GRADE`);
+            console;
+        }
+        if (graduateRecord[endTermIdx + 1].startsWith(constants_1.COMPLETED_SEMESTER_PREFIX) || hasRemaining(graduateRecord.slice(endTermIdx + 1)) && hasLetterGrade(termCourses)) {
             term.courses = parseCompletedCourses(termCourses);
             terms.push(term);
             const nextTerm = nextTermStartIdx(graduateRecord, endTermIdx);
@@ -166,6 +179,11 @@ const parseTerms = (lines) => {
         else {
             term.courses = parseInProgressCourse(termCourses);
             terms.push(term);
+            if (hasRemaining(graduateRecord.slice(endTermIdx + 1))) {
+                const nextTerm = nextTermStartIdx(graduateRecord, endTermIdx);
+                graduateRecord = graduateRecord.slice(nextTerm);
+                continue;
+            }
             return transferTerms.concat(terms);
         }
     }

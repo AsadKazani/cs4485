@@ -4,6 +4,7 @@ import "./transcript.css";
 
 const Audit = ({audit, transcript, track})=>{
   const {coreGPAInfo, electiveGPAInfo, outstandingRequirements, track: trackReq} = audit
+  console.log('yabdadba', outstandingRequirements)
   const combinedGPA = (coreGPAInfo.gpa + electiveGPAInfo.gpa)/ 2
   const coreCourseNames = []
   coreGPAInfo.factoredCourses.forEach(course=> coreCourseNames.push(`${course.coursePrefix} ${course.courseNumber}`))
@@ -51,7 +52,6 @@ const Audit = ({audit, transcript, track})=>{
 
 
   const inProgressElectivesJSX = outstandingRequirements.requiredIncompleteElectiveCourses.map((course, idx)=> <Course key={idx} info={course}/>)
-  console.log('courses are', electiveGPAInfo)
 
 const gpaInfo = [
   <p key = 'core'>Core GPA: {coreGPAInfo.gpa}</p>,
@@ -87,7 +87,10 @@ const completedElectiveInfo = electiveGPAInfo.factoredCourses.map((course, idx) 
         {inProgressElectivesJSX.length > 0? <Requirements header={`${nameTokens[0]} Needs to Pass The Following In Progress Elective Courses`} content={inProgressElectivesJSX}/> : ""}
         {remainingAdditionalCoreNum <= 0 ? "" : <Requirements header={`${nameTokens[0]} Needs to Take ${remainingAdditionalCoreNum} Courses Chosen From Below`} content={untakenOfferedAdditionalCoresCoursesJSX}/>}
         {/* {numElectivesNeededToTake ? <div className="acc">{nameTokens[0]} Still Needs To Take {numElectivesNeededToTake} Elective Courses</div> : ""} */}
-
+        {outstandingRequirements.requiredCoreGPA !== -1? <Requirements header={`To Maintain a ${audit.track.requiredCoreGPA} ${nameTokens[0]} must maintain a GPA of ${outstandingRequirements.requiredCoreGPA} in the remaining Core Classes`}/> : ""}
+        {outstandingRequirements.requiredElectiveGPA !== -1? <Requirements header={`To Maintain a ${audit.track.requiredCoreGPA} ${nameTokens[0]} must maintain a GPA of ${outstandingRequirements.requiredElectiveGPA} in the remaining Elective Classes`}/> : ""}
+        {outstandingRequirements.requiredCoreLetterGrade.length?  <Requirements header={`To Maintain a ${audit.track.requiredCoreGPA} ${nameTokens[0]} must get a Letter Grade of  ${outstandingRequirements.requiredCoreLetterGrade} in the remaining Core Class`}/> : ""}
+        {outstandingRequirements.requiredElectiveLetterGrade.length?  <Requirements header={`To Maintain a ${audit.track.requiredCoreGPA} ${nameTokens[0]} must get a Letter Grade of  ${outstandingRequirements.requiredElectiveLetterGrade} in the remaining Core Class`}/> : ""}
         {numElectivesNeededToTake <= 0 ? "": <Requirements header={`${nameTokens[0]} Still Needs To Take ${numElectivesNeededToTake} Elective Courses`} />}
       </div>
     </div>

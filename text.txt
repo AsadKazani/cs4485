@@ -1,129 +1,112 @@
-
-
 Unofficial Transcript - UT-Dallas
-Name:           George Jetson
-13    
-Student ID:   2021951753
+Name: Dak Prescott
+1 3
+Student ID: 2021456789
 External Degrees
-Clemson University
-Bachelor of Science 2018-12-20
+Mississippi Institute of Technology & Science
+Bachelor of Engineering 2020-08-01
 Academic Program History
-Program:Master
-2020-04-11:Active in Program 
-2020-04-11: Computer Science
- Major
-Print Date:2022-11-11
-Beginning of 
-Graduate Record
-2021 Spring 
-CourseDescriptionAttemptedEarnedGradePoints
-CS    6V81IND STUDY IN COMPUTER SCIENC3.0003.000A-11.010
-Course Topic: FTF DATABASE DES. 
-Instructor: Wei Li Wu 
-Xiao Li 
-CS 6313STATISTICAL MTHDS DATA SCIENCE3.0003.000P0.000
-Instructor: Jimi Kim 
-Min Chen 
-CS 6375MACHINE LEARNING3.0003.000A-11.010
-Instructor: Tan Duc Lam 
-Sriraam Natarajan 
-Attempted
-EarnedGPA UtsPoints
-Term GPA3.670Term Totals9.0009.0006.00022.020
-Transfer Term GPATransfer Totals0.0000.0000.0000.000
-Combined GPA3.670Comb Totals9.0009.0006.00022.020
-Cum GPA3.670Cum Totals9.0009.0006.00022.020
-Transfer Cum GPATransfer  Totals0.0000.0000.0000.000
-Combined Cum GPA3.670Comb Totals9.0009.0006.00022.020
-This semester is official as of the transcript print date. Due to the pandemic, additional changes may be made through May 20, 2021. 
-Academic policies were adjusted due to COVID-19. See catalog for details.
-Academic Standing Effective 2021-05-19: Good Standing
+Program: Master
+2021-03-22: Active in Program
+2021-03-22: Computer Science Major
+Print Date: 2022-11-30
+Beginning of Graduate Record
 2021 Fall
- 
-Course
-DescriptionAttemptedEarnedGradePoints
-CS 6320NATURAL LANGUAGE PROCESSING3.0003.000B+9.990
-Instructor: Dan Ioan Moldovan 
-Parag Pravin Dakle 
-CS 6350BIG DATA MGMT AND ANALYTICS3.0003.000A12.000
-Instructor: Latifur R Khan 
-Saquib Irtiza 
-CS 6378ADVANCED OPERATING SYSTEMS3.0003.000B+9.990
-
-Unofficial Transcript - UT-Dallas
-Name:           George Jetson
-23    
-CourseDescriptionAttemptedEarnedGradePoints
-Instructor: Neeraj Mittal 
-Sahil Dhoked 
-AttemptedEarnedGPA UtsPoints
-Term GPA3.553Term Totals9.0009.0009.00031.980
-Transfer Term GPATransfer Totals0.0000.0000.0000.000
-Combined GPA3.553Comb Totals9.0009.0009.00031.980
-Cum GPA3.600Cum Totals18.00018.00015.00054.000
-Transfer Cum GPATransfer  Totals0.0000.0000.0000.000
-Combined Cum GPA3.600Comb Totals18.00018.00015.00054.000
+Course Description Attempted Earned Grade Points
+CS 6313 STATISTICAL MTHDS DATA SCIENCE 3.000 3.000 A 12.000
+Instructor: Mananage Sanjaya Maduranga Saman Kumara
+Min Chen
+CS 6360 DATABASE DESIGN 3.000 3.000 A 12.000
+Instructor: Murat Kantarcioglu
+Mestan Firat Celiktug
+CS 6363 DESIGN & ANALYS-COMP ALGORITHM 3.000 3.000 A 12.000
+Instructor: Sergey Bereg
+Mohammadreza Haghpanah
+Attempted Earned GPA Uts Points
+Term GPA 4.000 Term Totals 9.000 9.000 9.000 36.000
+Transfer Term GPA Transfer Totals 0.000 0.000 0.000 0.000
+Combined GPA 4.000 Comb Totals 9.000 9.000 9.000 36.000
+Cum GPA 4.000 Cum Totals 9.000 9.000 9.000 36.000
+Transfer Cum GPA Transfer Totals 0.000 0.000 0.000 0.000
+Combined Cum GPA 4.000 Comb Totals 9.000 9.000 9.000 36.000
 Academic Standing Effective 2021-12-22: Good Standing
 2022 Spring
- 
-Course
-DescriptionAttemptedEarnedGradePoints
-CS 6363DESIGN & ANALYS-COMP ALGORITHM3.0003.000B9.000
-Instructor: Hongyao Huang 
-Benjamin A Raichel 
-CS 6364ARTIFICIAL INTELLIGENCE3.0003.000B+9.990
-Instructor: Dan Ioan Moldovan 
-Joao Pedro Veloso De Andrade Pinto 
-CS 6384COMPUTER VISION3.0003.000A12.000
-Instructor: Jikai Wang 
-Yu Xiang 
-Attempted
-EarnedGPA UtsPoints
-Term GPA3.443Term Totals9.0009.0009.00030.990
-Transfer Term GPATransfer Totals0.0000.0000.0000.000
-Combined GPA3.443Comb Totals9.0009.0009.00030.990
-Cum GPA3.541Cum Totals27.00027.00024.00084.990
-Transfer Cum GPATransfer  Totals0.0000.0000.0000.000
-Combined Cum GPA3.541Comb Totals27.00027.00024.00084.990
+Course Description Attempted Earned Grade Points
+CS 6V81 3.000 3.000 A 12.000
+Instructor:
+CS 6320 3.000 3.000 C+ 6.990
+Instructor:
+CS 6364 3.000 3.000 C 6.000
+Instructor:
+IND STUDY IN COMPUTER SCIENC
+IMAGE FRAMEWORK
+Landry Smith
+NATURAL LANGUAGE PROCESSING
+Sanda M Harabagiu
+Maxwell Alan Weinzierl
+Joao Pedro Veloso De Andrade Pinto
+ARTIFICIAL INTELLIGENCE
+Haim Schweitzer
+Sopam Dasgupta
+Unofficial Transcript - UT-Dallas
+Name: Nikhil Rajesh Virmani
+2 3
+Attempted Earned GPA Uts Points
+Term GPA 2.777 Term Totals 9.000 9.000 9.000 24.990
+Transfer Term GPA Transfer Totals 0.000 0.000 0.000 0.000
+Combined GPA 2.777 Comb Totals 9.000 9.000 9.000 24.990
+Cum GPA 3.388 Cum Totals 18.000 18.000 18.000 60.990
+Transfer Cum GPA Transfer Totals 0.000 0.000 0.000 0.000
+Combined Cum GPA 3.388 Comb Totals 18.000 18.000 18.000 60.990
 Academic Standing Effective 2022-05-18: Good Standing
 2022 Summer
- 
-CourseDescriptionAttemptedEarnedGradePoints
-CS    6V98THESIS3.0003.000P0.000
-Instructor: 
-DATA ENCAPSULATION
-Darth Vader
-AttemptedEarnedGPA UtsPoints
-Term GPA0.000Term Totals3.0003.0000.0000.000
-Transfer Term GPATransfer Totals0.0000.0000.0000.000
-Combined GPA0.000Comb Totals3.0003.0000.0000.000
-Cum GPA3.541Cum Totals30.00030.00024.00084.990
-Transfer Cum GPATransfer  Totals0.0000.0000.0000.000
-Combined Cum GPA3.541Comb Totals30.00030.00024.00084.990
+Course Description Attempted Earned Grade Points
+ECSC 5177 CS IPP ASSIGNMENT 1.000 1.000 P 0.000
+Instructor: Mary Ann C Stewart
+Attempted Earned GPA Uts Points
+Term GPA 0.000 Term Totals 1.000 1.000 0.000 0.000
+Transfer Term GPA Transfer Totals 0.000 0.000 0.000 0.000
+Combined GPA 0.000 Comb Totals 1.000 1.000 0.000 0.000
+Cum GPA 3.388 Cum Totals 19.000 19.000 18.000 60.990
+Transfer Cum GPA Transfer Totals 0.000 0.000 0.000 0.000
+Combined Cum GPA 3.388 Comb Totals 19.000 19.000 18.000 60.990
 Academic Standing Effective 2022-08-17: Good Standing
 2022 Fall
- 
-CourseAttemptedEarnedGradePoints
-CS    6V983.0000.0000.000
-Instructor: 
-Description
-THESIS
-AUTHENTICATION OF DATA 
-Darth Vader
-AttemptedEarnedGPA UtsPoints
-Term GPA0.000Term Totals3.0000.0000.0000.000
-Transfer Term GPATransfer Totals0.0000.0000.0000.000
-
+Course Description Attempted Earned Grade Points
+CS 6349 NETWORK SECURITY 3.000 0.000 0.000
+Instructor: Kamil Sarac
+Souvik Das
+CS 6375 MACHINE LEARNING 3.000 0.000 0.000
+Instructor: Sagnik Dakshit
+Rishabh Krishnan Iyer
+CS 6382 THEORY OF COMPUTATION 3.000 0.000 0.000
+Instructor: Ding Z Du
+Tiantian Chen
+Attempted Earned GPA Uts Points
+Term GPA 0.000 Term Totals 9.000 0.000 0.000 0.000
+Transfer Term GPA Transfer Totals 0.000 0.000 0.000 0.000
+Combined GPA 0.000 Comb Totals 9.000 0.000 0.000 0.000
+Cum GPA 3.388 Cum Totals 28.000 19.000 18.000 60.990
+Transfer Cum GPA Transfer Totals 0.000 0.000 0.000 0.000
+Combined Cum GPA 3.388 Comb Totals 28.000 19.000 18.000 60.990
+2023 Spring
+Course Description Attempted Earned Grade Points
+CS 6347 STAT MTHD AI & MACHINE LEARN 3.000 0.000 0.000
+Instructor: Nicholas Robert Ruozzi
+CS 6350 BIG DATA MGMT AND ANALYTICS 3.000 0.000 0.000
+Instructor: Latifur R Khan
+Attempted Earned GPA Uts Points
+Term GPA 0.000 Term Totals 6.000 0.000 0.000 0.000
+Transfer Term GPA Transfer Totals 0.000 0.000 0.000 0.000
+Combined GPA 0.000 Comb Totals 6.000 0.000 0.000 0.000
+Cum GPA 3.388 Cum Totals 34.000 19.000 18.000 60.990
+Transfer Cum GPA Transfer Totals 0.000 0.000 0.000 0.000
+Combined Cum GPA 3.388 Comb Totals 34.000 19.000 18.000 60.990
 Unofficial Transcript - UT-Dallas
-Name:           George Jetson
-33    
-AttemptedEarnedGPA UtsPoints
-Combined GPA0.000Comb Totals3.0000.0000.0000.000
-Cum GPA3.541Cum Totals33.00030.00024.00084.990
-Transfer Cum GPATransfer  Totals0.0000.0000.0000.000
-Combined Cum GPA3.541Comb Totals33.00030.00024.00084.990
+Name: Nikhil Rajesh Virmani
+3 3
 Graduate Career Totals
-Cum GPA:3.541Cum Totals33.00030.00024.00084.990
-Transfer Cum GPATransfer  Totals0.0000.0000.0000.000
-Combined Cum GPA3.541Comb Totals33.00030.00024.00084.990
+Cum GPA: 3.388 Cum Totals 34.000 19.000 18.000 60.990
+Transfer Cum GPA Transfer Totals 0.000 0.000 0.000 0.000
+Combined Cum GPA 3.388 Comb Totals 34.000 19.000 18.000 60.990
 End of Unofficial Transcript - UT-Dallas

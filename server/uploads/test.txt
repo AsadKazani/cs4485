@@ -1,129 +1,384 @@
 
 
 Unofficial Transcript - UT-Dallas
-Name:           George Jetson
-13    
-Student ID:   2021951753
-External Degrees
-Clemson University
-Bachelor of Science 2018-12-20
-Academic Program History
-Program:Master
-2020-04-11:Active in Program 
-2020-04-11: Computer Science
- Major
-Print Date:2022-11-11
-Beginning of 
-Graduate Record
-2021 Spring 
+Name:           Patrick Star
+15    
+Student ID:   2021705000
+Degrees Awarded
+Degree:Bachelor of Science 
+Confer Date:2021-12-25
+Degree Honors:Magna Cum Laude 
+Plan:Computer Science 
+Transfer Credits
+Transfer Credit from Texas A& M Commerce
+ Applied Toward Undergraduate Program 
+2019 Fall
 CourseDescriptionAttemptedEarnedGradePoints
-CS    6V81IND STUDY IN COMPUTER SCIENC3.0003.000A-11.010
-Course Topic: FTF DATABASE DES. 
-Instructor: Wei Li Wu 
-Xiao Li 
-CS 6313STATISTICAL MTHDS DATA SCIENCE3.0003.000P0.000
-Instructor: Jimi Kim 
-Min Chen 
-CS 6375MACHINE LEARNING3.0003.000A-11.010
-Instructor: Tan Duc Lam 
-Sriraam Natarajan 
+ARTS 1301EXPLORATION OF THE ARTS3.0003.000 A0.000
+CHEM 1311GENERAL CHEMISTRY I3.0003.000 A0.000
+CHEM 1111GENERAL CHEMISTRY LAB I1.0001.000 A0.000
+CHEM 1312GENERAL CHEMISTRY II3.0003.000 A0.000
+CHEM 1112GENERAL CHEMISTRY LAB II1.0001.000 A0.000
+CS 1336PROGRAMMING FUNDAMENTALS3.0003.000 A0.000
+CS 1337COMPUTER SCIENCE I3.0003.000 A0.000
+ENGL 1301CCN:COMPOSITION I3.0003.000 A0.000
+GOVT 2306STATE AND LOCAL GOVERNMENT3.0003.000 A0.000
+MATH 2312PRECALCULUS4.0004.000 B0.000
+MATH 2413DIFFERENTIAL CALCULUS4.0004.000 A0.000
+MATH 2414INTEGRAL CALCULUS4.0004.000 A0.000
+PSYC 1300CCN:LEARNING FRAMEWORK3.0003.000 A0.000
+RHET 1302RHETORIC3.0003.000 A0.000
+Course Trans GPA:0.000 Transfer Totals:41.00041.0000.000 
+Academic Program History
+Program:Undergraduate
+2019-04-06:Active in Program 
+2019-04-06: Computer Science
+ Major
+Print Date:2022-08-16
+.- - - - -   TSI Status   - - - - -
+Reading:   Complete     Texas A&M Commerce  15-MAY-2019 
+Math:      Complete     Texas A&M Commerce  15-MAY-2019 
+Writing:   Complete     Texas A&M Commerce  15-MAY-2019 
+.
+SB1231 withdrawals from UT Dallas = 0
+.
+Beginning of Undergraduate Record
+2019 Fall
+ 
+
+Unofficial Transcript - UT-Dallas
+Name:           Patrick Star
+25    
+CourseDescriptionAttemptedEarnedGradePoints
+CS 2305DISCRETE MATH FOR COMPUTING I3.0003.000A-11.010
+Instructor: Ronaldo Pinheiro Goncalves Ju 
+CS 2336COMPUTER SCIENCE II3.0003.000A12.000
+Instructor: Ziaullah Khan 
+PHIL 1301INTRODUCTION TO PHILOSOPHY3.0003.000A12.000
+Req Designation:Core - 040 & 090 Lang Phil Culture & CompAreaOpt
+Instructor: Lawrence Andrew Amato 
+Isai del Bosque 
+PHYS 2125PHYSICS LABORATORY I1.0001.000A+4.000
+Req Designation:Core - 030 & 090 Life Physical Science CompAreaOpt
+Instructor: Saeed Rahmanian Koshkaki 
+Kuei Sun 
+PHYS 2325MECHANICS3.0003.000A+12.000
+Req Designation:Core - 030 & 090 Life Physical Science CompAreaOpt
+Instructor: Nikhil Uday Dhale 
+Bing Lv 
 Attempted
 EarnedGPA UtsPoints
-Term GPA3.670Term Totals9.0009.0006.00022.020
+Term GPA3.924Term Totals13.00013.00013.00051.010
+Transfer Term GPATransfer Totals41.00041.0000.0000.000
+Combined GPA3.924Comb Totals54.00054.00013.00051.010
+Cum GPA3.924Cum Totals13.00013.00013.00051.010
+Transfer Cum GPATransfer  Totals41.00041.0000.0000.000
+Combined Cum GPA3.924Comb Totals54.00054.00013.00051.010
+Academic Standing Effective 2020-01-08: Good Standing
+2020 Spring
+ 
+Course
+DescriptionAttemptedEarnedGradePoints
+CS 3305DISCRETE MATH FOR COMPUTING II3.0003.000A12.000
+Instructor: Bhadrachalam Chitturi 
+CS 3340COMPUTER ARCHITECTURE3.0003.000A12.000
+Instructor: Nhut Nguyen 
+CS 3341PROBABILITY & STATS IN CS/SE3.0003.000A+12.000
+Instructor: Marwah Mahmoud Soliman 
+Yulia Gel 
+CS 3345DATA STRUCTURES & ALGORM ANLYS3.0003.000A+12.000
+Instructor: Ziaullah Khan 
+EPCS 2200ENGR PROJECT IN COMM SERV2.0002.000A8.000
+Instructor: Terrell R. Bennett 
+PHYS 2126PHYSICS LABORATORY II1.0001.000A+4.000
+Instructor: Paul J. Macalevey 
+Soumyajit Dey 
+Lamya Saleh 
+PHYS 2326ELECTROMAGNETISM AND WAVES3.0003.000A12.000
+Req Designation:Core - 030 & 090 Life Physical Science CompAreaOpt
+Instructor: Robert Glosser 
+Attempted
+EarnedGPA UtsPoints
+Term GPA4.000Term Totals18.00018.00018.00072.000
 Transfer Term GPATransfer Totals0.0000.0000.0000.000
-Combined GPA3.670Comb Totals9.0009.0006.00022.020
-Cum GPA3.670Cum Totals9.0009.0006.00022.020
-Transfer Cum GPATransfer  Totals0.0000.0000.0000.000
-Combined Cum GPA3.670Comb Totals9.0009.0006.00022.020
+Combined GPA4.000Comb Totals18.00018.00018.00072.000
+Cum GPA3.968Cum Totals31.00031.00031.000123.010
+Transfer Cum GPATransfer  Totals41.00041.0000.0000.000
+Combined Cum GPA3.968Comb Totals72.00072.00031.000123.010
+Academic policies were adjusted due to COVID-19. See catalog for details.
+Academic Standing Effective 2020-05-22: Good Standing
+2020 Summer
+ 
+
+Unofficial Transcript - UT-Dallas
+Name:           Patrick Star
+35    
+CourseDescriptionAttemptedEarnedGradePoints
+CS 3377C C++ PROGRAM IN A UNIX ENVRNM3.0003.000A-11.010
+Instructor: Richard K Min 
+Obuli Vignesh Rangasamy 
+ECS 2361SOC ISSUES & ETHICS SCI & TECH3.0003.000A12.000
+Req Designation:Core - 080 Social/Behavioral Science
+Instructor: John Richie McCaskill 
+GOVT 2305AMERICAN NATIONAL GOVERNMENT3.0003.000A12.000
+Req Designation:Core - 070 Government / Political Science
+Instructor: Leslie Stanaland 
+John Michael Eaton 
+MATH 2418LINEAR ALGEBRA4.0004.000A+16.000
+Instructor: Jigarkumar Sureshbhai Patel 
+Attempted
+EarnedGPA UtsPoints
+Term GPA3.924Term Totals13.00013.00013.00051.010
+Transfer Term GPATransfer Totals0.0000.0000.0000.000
+Combined GPA3.924Comb Totals13.00013.00013.00051.010
+Cum GPA3.955Cum Totals44.00044.00044.000174.020
+Transfer Cum GPATransfer  Totals41.00041.0000.0000.000
+Combined Cum GPA3.955Comb Totals85.00085.00044.000174.020
+Academic Standing Effective 2020-08-13: Good Standing
+2020 Fall 
+CourseDescriptionAttemptedEarnedGradePoints
+CS 3354SOFTWARE ENGINEERING3.0003.000A+12.000
+Instructor: Hung-Jui Guo 
+Mark C Paulk 
+CS 4337ORG OF PROGRAMMING LANGUAGES3.0003.000A-11.010
+Instructor: Chris Irwin Davis 
+Dongpeng Liu 
+CS 4347DATABASE SYSTEMS3.0003.000A12.000
+Instructor: Chris Irwin Davis 
+Siva Sai Nagender Vasireddy 
+CS 4384AUTOMATA THEORY3.0003.000A12.000
+Instructor: Zachary Evan Stallbohm 
+Ximeng Liu 
+Zhouxiang Wu 
+ECS 3390PROF & TECHNICAL COMMUNICATION3.0003.000A12.000
+Req Designation:Core - 010 Communication
+Instructor: Janece Bronson Glauser 
+Attempted
+EarnedGPA UtsPoints
+Term GPA3.934Term Totals15.00015.00015.00059.010
+Transfer Term GPATransfer Totals0.0000.0000.0000.000
+Combined GPA3.934Comb Totals15.00015.00015.00059.010
+Cum GPA3.950Cum Totals59.00059.00059.000233.030
+Transfer Cum GPATransfer  Totals41.00041.0000.0000.000
+Combined Cum GPA3.950Comb Totals100.000100.00059.000233.030
+This semester is official as of the transcript print date. Due to the pandemic, additional changes may be made through May 20, 2021. 
+Academic policies were adjusted due to COVID-19. See catalog for details.
+Academic Standing Effective 2020-12-15: Good Standing
+2021 Spring
+ 
+Course
+DescriptionAttemptedEarnedGradePoints
+CS 3162PROF RESPONSIBILITY IN CS & SE1.0001.000A+4.000
+Instructor: Vidroha Debroy 
+CS 4141DIGITAL SYSTEMS LABORATORY1.0001.000A+4.000
+Instructor: Brian Dennis Malouf 
+
+Unofficial Transcript - UT-Dallas
+Name:           Patrick Star
+45    
+CourseDescriptionAttemptedEarnedGradePoints
+Yangxiao Lu 
+Ninad Arun Khargonkar 
+Eric William Becker 
+CS 4341DIGITAL LOGIC & COMPUTER DESIG3.0003.000A+12.000
+Instructor: Hung-Jui Guo 
+Eric William Becker 
+CS 4348OPERATING SYSTEMS CONCEPTS3.0003.000CR0.000
+Instructor: I-
+Ling Yen
+Dongyu Mao
+Son Van Nguyen
+CS 4349ADV ALGORITHM DESIGN & ANALYSI3.0003.000A12.000
+Instructor: Bhadrachalam Chitturi
+Darrin Michael Wiley
+CS 6375MACHINE LEARNING3.0003.000P0.000
+Instructor: Tan Duc Lam
+Sriraam Natarajan
+Attempted
+EarnedGPA UtsPoints
+Term GPA4.000Term Totals14.00014.0008.00032.000
+Transfer Term GPATransfer Totals0.0000.0000.0000.000
+Combined GPA4.000Comb Totals14.00014.0008.00032.000
+Cum GPA3.956Cum Totals73.00073.00067.000265.030
+Transfer Cum GPATransfer  Totals41.00041.0000.0000.000
+Combined Cum GPA3.956Comb Totals114.000114.00067.000265.030
 This semester is official as of the transcript print date. Due to the pandemic, additional changes may be made through May 20, 2021. 
 Academic policies were adjusted due to COVID-19. See catalog for details.
 Academic Standing Effective 2021-05-19: Good Standing
+2021 Summer
+ 
+CourseDescriptionAttemptedEarnedGradePoints
+CS 6360DATABASE DESIGN3.0003.000A12.000
+Instructor: Chris Irwin Davis 
+Changbin Li 
+CS 6366COMPUTER GRAPHICS3.0003.000A12.000
+Instructor: Pushpa S. Kumar 
+Alakh Aggarwal 
+HIST 1301US HIST SURVEY TO CIVIL WAR3.0003.000A12.000
+Req Designation:Core - 060 and 090 American History & CompAreaOpt
+Instructor: Ze Zawng 
+Ben Wright 
+HIST 1302US HIST SURVEY FROM CIVIL WAR3.0003.000A-11.010
+Req Designation:Core - 060 and 090 American History & CompAreaOpt
+Instructor: Jeffrey Schulze 
+Justin Tyrone Hill 
+Attempted
+EarnedGPA UtsPoints
+Term GPA3.918Term Totals12.00012.00012.00047.010
+Transfer Term GPATransfer Totals0.0000.0000.0000.000
+Combined GPA3.918Comb Totals12.00012.00012.00047.010
+Cum GPA3.950Cum Totals85.00085.00079.000312.040
+Transfer Cum GPATransfer  Totals41.00041.0000.0000.000
+Combined Cum GPA3.950Comb Totals126.000126.00079.000312.040
+Academic Standing Effective 2021-08-16: Good Standing
 2021 Fall
  
 Course
 DescriptionAttemptedEarnedGradePoints
-CS 6320NATURAL LANGUAGE PROCESSING3.0003.000B+9.990
-Instructor: Dan Ioan Moldovan 
-Parag Pravin Dakle 
-CS 6350BIG DATA MGMT AND ANALYTICS3.0003.000A12.000
-Instructor: Latifur R Khan 
-Saquib Irtiza 
-CS 6378ADVANCED OPERATING SYSTEMS3.0003.000B+9.990
+CS 4314INTELLIGENT SYSTEMS ANALYSIS3.0003.000B9.000
+Instructor: Richard Golden 
 
 Unofficial Transcript - UT-Dallas
-Name:           George Jetson
-23    
+Name:           Patrick Star
+55    
 CourseDescriptionAttemptedEarnedGradePoints
-Instructor: Neeraj Mittal 
-Sahil Dhoked 
-AttemptedEarnedGPA UtsPoints
-Term GPA3.553Term Totals9.0009.0009.00031.980
-Transfer Term GPATransfer Totals0.0000.0000.0000.000
-Combined GPA3.553Comb Totals9.0009.0009.00031.980
-Cum GPA3.600Cum Totals18.00018.00015.00054.000
-Transfer Cum GPATransfer  Totals0.0000.0000.0000.000
-Combined Cum GPA3.600Comb Totals18.00018.00015.00054.000
-Academic Standing Effective 2021-12-22: Good Standing
-2022 Spring
- 
-Course
-DescriptionAttemptedEarnedGradePoints
-CS 6363DESIGN & ANALYS-COMP ALGORITHM3.0003.000B9.000
-Instructor: Hongyao Huang 
-Benjamin A Raichel 
-CS 6364ARTIFICIAL INTELLIGENCE3.0003.000B+9.990
-Instructor: Dan Ioan Moldovan 
-Joao Pedro Veloso De Andrade Pinto 
-CS 6384COMPUTER VISION3.0003.000A12.000
-Instructor: Jikai Wang 
-Yu Xiang 
+Ritesh Kumar Malaiya 
+CS 4485COMPUTER SCIENCE PROJECT4.0004.000A+16.000
+Instructor: Miguel Angel Razo Razo 
+Jeyakesavan Veerasamy 
+CS 6350BIG DATA MGMT AND ANALYTICS3.0003.000A12.000
+Instructor: Anurag Nagar 
+Simin Chen 
+Parth Padalkar 
+CS 6363DESIGN & ANALYS-COMP ALGORITHM3.0003.000A12.000
+Instructor: Bhadrachalam Chitturi 
+Darrin Michael Wiley 
 Attempted
 EarnedGPA UtsPoints
-Term GPA3.443Term Totals9.0009.0009.00030.990
+Term GPA3.769Term Totals13.00013.00013.00049.000
 Transfer Term GPATransfer Totals0.0000.0000.0000.000
-Combined GPA3.443Comb Totals9.0009.0009.00030.990
-Cum GPA3.541Cum Totals27.00027.00024.00084.990
-Transfer Cum GPATransfer  Totals0.0000.0000.0000.000
-Combined Cum GPA3.541Comb Totals27.00027.00024.00084.990
+Combined GPA3.769Comb Totals13.00013.00013.00049.000
+Cum GPA3.924Cum Totals98.00098.00092.000361.040
+Transfer Cum GPATransfer  Totals41.00041.0000.0000.000
+Combined Cum GPA3.924Comb Totals139.000139.00092.000361.040
+Academic Standing Effective 2021-12-22: Good Standing
+Undergraduate Career Totals
+Cum GPA:3.924Cum Totals98.00098.00092.000361.040
+Transfer Cum GPATransfer  Totals41.00041.0000.0000.000
+Combined Cum GPA3.924Comb Totals139.000139.00092.000361.040
+Non-Course Milestones
+UTD Core Complete
+Status:Completed
+Fast Track Student in
+Status:Completed
+Milestone Level:MSCS- Computer Science
+End of Unofficial Transcript - UT-Dallas
+
+Unofficial Transcript - UT-Dallas
+Name:           Patrick Star
+12    
+Student ID:   2021705000
+Degrees Awarded
+Degree:Bachelor of Science 
+Confer Date:2021-12-25
+Degree Honors:Magna Cum Laude 
+Plan:Computer Science 
+Transfer Credits
+Transfer Credit from UT Dallas Fast Track
+Applied Toward Master Program 
+2022 Spring
+CourseDescriptionAttemptedEarnedGradePoints
+CS 6360DATABASE DESIGN3.0003.000 A12.000
+CS 6366COMPUTER GRAPHICS3.0003.000 A12.000
+CS 6375MACHINE LEARNING3.0003.000 P0.000
+CS 6350BIG DATA MGMT AND ANALYTICS3.0003.000 A12.000
+CS 6363DESIGN & ANALYS-COMP ALGORITHM3.0003.000 A12.000
+Course Trans GPA:4.000 Transfer Totals:15.00015.00048.000
+Academic Program History
+Program:Master
+2021-11-09:Active in Program 
+2021-11-09: Computer Science
+ Major
+Print Date:2022-08-16
+Beginning of 
+Graduate Record
+2022 Spring 
+Course
+DescriptionAttemptedEarnedGradePoints
+CS 6313STATISTICAL MTHDS DATA SCIENCE3.0003.000B+9.990
+Instructor: Indrajith Kumara Wasala Bandara Wasala Mudiyansela 
+Sungbum Kim 
+Min Chen 
+CS 6334VIRTUAL REALITY3.0003.000A12.000
+Instructor: Yatharth Singhal 
+Jin Ryong Kim 
+CS 6353COMPILER CONSTRUCTION3.0003.000A12.000
+Instructor: Juan Manuel Florez Fandino 
+Shiyi Wei 
+Attempted
+EarnedGPA UtsPoints
+Term GPA3.777Term Totals9.0009.0009.00033.990
+Transfer Term GPA4.000Transfer Totals15.00015.00012.00048.000
+Combined GPA3.904Comb Totals24.00024.00021.00081.990
+Cum GPA3.777Cum Totals9.0009.0009.00033.990
+The core GPA is 3.833.
+The elective GPA is 4.000.
+The overall GPA is 3.916.
+Will the student be taking an extra elective?
+Enter Y for Yes or N for No: N
+To maintain a 3.0 elective GPA:
+ The student must pass the remaining 2 elective courses.
+Will the student be taking any more extra graduate courses?
+Enter Y for Yes or N for No: Y
+How many more extra graduate courses will the student be 
+taking? 1
+To maintain a 3.0 overall GPA:
+ The student must pass their remaining courses.
+
+Unofficial Transcript - UT-Dallas
+Name:           Patrick Star
+22    
+Transfer Cum GPA4.000Transfer  Totals15.00015.00012.00048.000
+Combined Cum GPA3.904Comb Totals24.00024.00021.00081.990
 Academic Standing Effective 2022-05-18: Good Standing
 2022 Summer
  
 CourseDescriptionAttemptedEarnedGradePoints
-CS    6V98THESIS3.0003.000P0.000
-Instructor: 
-DATA ENCAPSULATION
-Darth Vader
-AttemptedEarnedGPA UtsPoints
-Term GPA0.000Term Totals3.0003.0000.0000.000
+CS 6367SFTWR TEST/VALIDATN/VERIFICATN3.0003.000A12.000
+Instructor: Weichen E Wong 
+Dongcheng Li 
+Zizhao Chen 
+Attempted
+EarnedGPA UtsPoints
+Term GPA4.000Term Totals3.0003.0003.00012.000
 Transfer Term GPATransfer Totals0.0000.0000.0000.000
-Combined GPA0.000Comb Totals3.0003.0000.0000.000
-Cum GPA3.541Cum Totals30.00030.00024.00084.990
-Transfer Cum GPATransfer  Totals0.0000.0000.0000.000
-Combined Cum GPA3.541Comb Totals30.00030.00024.00084.990
-Academic Standing Effective 2022-08-17: Good Standing
+Combined GPA4.000Comb Totals3.0003.0003.00012.000
+Cum GPA3.833Cum Totals12.00012.00012.00045.990
+Transfer Cum GPA4.000Transfer  Totals15.00015.00012.00048.000
+Combined Cum GPA3.916Comb Totals27.00027.00024.00093.990
 2022 Fall
  
-CourseAttemptedEarnedGradePoints
-CS    6V983.0000.0000.000
-Instructor: 
-Description
-THESIS
-AUTHENTICATION OF DATA 
-Darth Vader
+Course
+DescriptionAttemptedEarnedGradePoints
+CS 6320NATURAL LANGUAGE PROCESSING3.0000.0000.000
+Instructor: Dan Ioan Moldovan 
+CS 6326HUMAN COMPUTER INTERACTIONS3.0000.0000.000
+Instructor: Jin Ryong Kim 
+CS 6364ARTIFICIAL INTELLIGENCE3.0000.0000.000
+Instructor: Feng Chen 
 AttemptedEarnedGPA UtsPoints
-Term GPA0.000Term Totals3.0000.0000.0000.000
+Term GPA0.000Term Totals9.0000.0000.0000.000
 Transfer Term GPATransfer Totals0.0000.0000.0000.000
-
-Unofficial Transcript - UT-Dallas
-Name:           George Jetson
-33    
-AttemptedEarnedGPA UtsPoints
-Combined GPA0.000Comb Totals3.0000.0000.0000.000
-Cum GPA3.541Cum Totals33.00030.00024.00084.990
-Transfer Cum GPATransfer  Totals0.0000.0000.0000.000
-Combined Cum GPA3.541Comb Totals33.00030.00024.00084.990
+Combined GPA0.000Comb Totals9.0000.0000.0000.000
+Cum GPA3.833Cum Totals21.00012.00012.00045.990
+Transfer Cum GPA4.000Transfer  Totals15.00015.00012.00048.000
+Combined Cum GPA3.916Comb Totals36.00027.00024.00093.990
 Graduate Career Totals
-Cum GPA:3.541Cum Totals33.00030.00024.00084.990
-Transfer Cum GPATransfer  Totals0.0000.0000.0000.000
-Combined Cum GPA3.541Comb Totals33.00030.00024.00084.990
+Cum GPA:3.833Cum Totals21.00012.00012.00045.990
+Transfer Cum GPA4.000Transfer  Totals15.00015.00012.00048.000
+Combined Cum GPA3.916Comb Totals36.00027.00024.00093.990
+Non-Course Milestones
+Fast Track Student in
+Status:Completed
+Milestone Level:MSCS- Computer Science
 End of Unofficial Transcript - UT-Dallas

@@ -36,6 +36,9 @@ const parseStudentId = (lines: string[]): string => {
   return lines[3].split(":")[1].substring(1);
 };
 
+
+
+
 const parseCompletedCourses = (text: string[]): Course[] => {
   const courses: Course[] = [];
   for (let i = 0; i < text.length; i++) {
@@ -49,6 +52,7 @@ const parseCompletedCourses = (text: string[]): Course[] => {
     course.earnedPoints = Number(tokens[length - 3]);
     course.attemptedPoints = Number(tokens[length - 4]);
     course.courseName = tokens.slice(2, length - 4).join(" ");
+    course.courseName = course.courseName.length ? course.courseName : "NO COURSE NAME FOUND"
     courses.push(course);
   }
   return courses;
@@ -67,6 +71,7 @@ const parseInProgressCourse = (text: string[]): Course[] => {
     course.earnedPoints = Number(tokens[length - 2]);
     course.attemptedPoints = Number(tokens[length - 3]);
     course.courseName = tokens.slice(2, length - 3).join(" ");
+    course.courseName = course.courseName.length ? course.courseName : "NO COURSE NAME FOUND"
     courses.push(course);
   }
   return courses;
@@ -125,6 +130,16 @@ const nextTermStartIdx = (lines: string[], idx: number)=>{
 }
 
 
+const hasLetterGrade = (lines: string[])=>{
+  const line = lines[0]
+  const tokens = line.split(' ')
+  const grade = tokens[tokens.length-2]
+  console.log('grade is :_)')
+  return grade[0] >= 'A' && grade[0] <='Z'
+
+}
+
+
 const parseTerms = (lines: string[]): Term[] => {
   const terms: Term[] = [];
   const transferTerms = handleTransferTerms(lines.concat([]))
@@ -165,7 +180,13 @@ const parseTerms = (lines: string[]): Term[] => {
         else termCourses.push(graduateRecord[i - 1]);
       }
     }
-    if (graduateRecord[endTermIdx + 1].startsWith(COMPLETED_SEMESTER_PREFIX) || hasRemaining(graduateRecord.slice(endTermIdx + 1))) {
+
+    if(hasLetterGrade(termCourses)){
+      console.log(`${term.name} ${term.courses} HAS LETTER GRADE`)
+      console
+
+    }
+    if (graduateRecord[endTermIdx + 1].startsWith(COMPLETED_SEMESTER_PREFIX) || hasRemaining(graduateRecord.slice(endTermIdx + 1)) && hasLetterGrade(termCourses)) {
       term.courses = parseCompletedCourses(termCourses);
       terms.push(term);
       const nextTerm = nextTermStartIdx(graduateRecord, endTermIdx)
@@ -173,14 +194,14 @@ const parseTerms = (lines: string[]): Term[] => {
     }else {
       term.courses = parseInProgressCourse(termCourses);
       terms.push(term);
+      if(hasRemaining(graduateRecord.slice(endTermIdx + 1))){
+        const nextTerm = nextTermStartIdx(graduateRecord, endTermIdx)
+        graduateRecord = graduateRecord.slice(nextTerm);
+        continue
+      }
       return transferTerms.concat(terms);
     }
   }
 
   return transferTerms.concat(terms);
 };
-
-
-// Core Courses:  CS 6V81 
-
-// Elective Courses: CS 6320, CS 6364, CS 6378, CS 6384, CS 6V98, CS 6V98  

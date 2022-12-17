@@ -19,6 +19,10 @@ interface OutstandingRequirements{
   requiredIncompleteCoreCourses: Course[]; 
   requiredIncompleteElectiveCourses: Course[];
   remainingAdditionalCoreClasses: number; 
+  requiredCoreGPA: number, 
+  requiredElectiveGPA: number,
+  requiredCoreLetterGrade: string, 
+  requiredElectiveLetterGrade: string
 }
 
 export interface Audit{
@@ -62,7 +66,12 @@ export const audit = (transcript: Transcript, track: string): Audit => {
   const incompleteRequirements: OutstandingRequirements = {
     requiredIncompleteCoreCourses: [], 
     requiredIncompleteElectiveCourses: [], 
-    remainingAdditionalCoreClasses: trackRequirements.numberRequiredAdditionalCoreCourses
+    remainingAdditionalCoreClasses: trackRequirements.numberRequiredAdditionalCoreCourses,
+    requiredCoreGPA: -1, 
+    requiredElectiveGPA: -1, 
+    requiredCoreLetterGrade: "", 
+    requiredElectiveLetterGrade: ""
+    
   }
 
   const audit: Audit ={
@@ -75,8 +84,67 @@ export const audit = (transcript: Transcript, track: string): Audit => {
 
   aggregateAuditInfo(trackRequirements, audit)
   computeOutstandingRequirements(audit)
+  computeCoreGPARequirements(audit)
+  computeElectiveGPARequirements(audit)
   return audit
 };
+
+
+const computeCoreGPARequirements= (audit: Audit)=>{
+  const {track, coreGPAInfo, outstandingRequirements} = audit
+
+  //   // 5 required core classes 
+  //   // taken x required core classes 
+  //   // ming gpa: 3.19
+  //   // still is required to take y core classes 
+  //   // his gpa is y.zzzz
+  //   // what his required gpa point must be in the y classes to mainitin or go to the minimum gpa requirements :)
+  //   // ((minGPA * numrequired core) - (x * y.zzzzzz))/ (numrequried-x)
+
+  const minGPA = track.requiredCoreGPA
+  const requiredCores = track.numberRequiredCoreCourses + track.numberRequiredAdditionalCoreCourses
+  const takenCores = coreGPAInfo.factoredCourses.length
+  const coreGPAValue = coreGPAInfo.gpa
+  const requiredGPA = ((minGPA * requiredCores) - (takenCores * coreGPAValue)) / (requiredCores - takenCores)
+  if(requiredCores - takenCores == 1) outstandingRequirements.requiredCoreLetterGrade = computeLetterGradeNeeded(requiredGPA)
+  else outstandingRequirements.requiredCoreGPA = requiredGPA
+
+}
+
+
+const computeElectiveGPARequirements= (audit: Audit)=>{
+  const {track, electiveGPAInfo, outstandingRequirements} = audit
+  const minGPA = track.requiredCoreGPA
+  const requiredCores = track.requiredElectiveHours
+  let totElectiveHours = 0
+  electiveGPAInfo.factoredCourses.forEach(course=> {
+    if(course.courseNumber[1] == 'V'){
+      totElectiveHours+=3
+    }else totElectiveHours += Number(course.courseNumber[1])
+  })
+  const electiveGPAValue = electiveGPAInfo.gpa
+  const requiredGPA = ((minGPA * requiredCores) - (totElectiveHours * electiveGPAValue)) / (requiredCores - totElectiveHours)
+  if(requiredCores - totElectiveHours == 3) outstandingRequirements.requiredElectiveLetterGrade = computeLetterGradeNeeded(requiredGPA)
+  else outstandingRequirements.requiredElectiveGPA = requiredGPA
+
+}
+
+
+const computeLetterGradeNeeded = (requiredAvg: number)=>{
+		        
+  if (requiredAvg > 3.670)
+      return "A";
+  else if (requiredAvg > 3.330)
+      return "A-"; 
+  else if (requiredAvg > 3.000)
+      return "B+";
+  else if (requiredAvg > 2.670)
+      return "B";   
+  else if (requiredAvg > 2.330)
+      return "B-";
+  
+  return "C+"
+}
 
 const computeOutstandingRequirements = (audit: Audit)=>{
   const {requiredCoreCourses} = audit.track

@@ -33,7 +33,11 @@ const audit = (transcript, track) => {
     const incompleteRequirements = {
         requiredIncompleteCoreCourses: [],
         requiredIncompleteElectiveCourses: [],
-        remainingAdditionalCoreClasses: trackRequirements.numberRequiredAdditionalCoreCourses
+        remainingAdditionalCoreClasses: trackRequirements.numberRequiredAdditionalCoreCourses,
+        requiredCoreGPA: -1,
+        requiredElectiveGPA: -1,
+        requiredCoreLetterGrade: "",
+        requiredElectiveLetterGrade: ""
     };
     const audit = {
         coreGPAInfo: coreGPAInfo,
@@ -44,9 +48,55 @@ const audit = (transcript, track) => {
     };
     aggregateAuditInfo(trackRequirements, audit);
     computeOutstandingRequirements(audit);
+    computeCoreGPARequirements(audit);
+    computeElectiveGPARequirements(audit);
     return audit;
 };
 exports.audit = audit;
+const computeCoreGPARequirements = (audit) => {
+    const { track, coreGPAInfo, outstandingRequirements } = audit;
+    const minGPA = track.requiredCoreGPA;
+    const requiredCores = track.numberRequiredCoreCourses + track.numberRequiredAdditionalCoreCourses;
+    const takenCores = coreGPAInfo.factoredCourses.length;
+    const coreGPAValue = coreGPAInfo.gpa;
+    const requiredGPA = ((minGPA * requiredCores) - (takenCores * coreGPAValue)) / (requiredCores - takenCores);
+    if (requiredCores - takenCores == 1)
+        outstandingRequirements.requiredCoreLetterGrade = computeLetterGradeNeeded(requiredGPA);
+    else
+        outstandingRequirements.requiredCoreGPA = requiredGPA;
+};
+const computeElectiveGPARequirements = (audit) => {
+    const { track, electiveGPAInfo, outstandingRequirements } = audit;
+    const minGPA = track.requiredCoreGPA;
+    const requiredCores = track.requiredElectiveHours;
+    let totElectiveHours = 0;
+    electiveGPAInfo.factoredCourses.forEach(course => {
+        if (course.courseNumber[1] == 'V') {
+            totElectiveHours += 3;
+        }
+        else
+            totElectiveHours += Number(course.courseNumber[1]);
+    });
+    const electiveGPAValue = electiveGPAInfo.gpa;
+    const requiredGPA = ((minGPA * requiredCores) - (totElectiveHours * electiveGPAValue)) / (requiredCores - totElectiveHours);
+    if (requiredCores - totElectiveHours == 3)
+        outstandingRequirements.requiredElectiveLetterGrade = computeLetterGradeNeeded(requiredGPA);
+    else
+        outstandingRequirements.requiredElectiveGPA = requiredGPA;
+};
+const computeLetterGradeNeeded = (requiredAvg) => {
+    if (requiredAvg > 3.670)
+        return "A";
+    else if (requiredAvg > 3.330)
+        return "A-";
+    else if (requiredAvg > 3.000)
+        return "B+";
+    else if (requiredAvg > 2.670)
+        return "B";
+    else if (requiredAvg > 2.330)
+        return "B-";
+    return "C+";
+};
 const computeOutstandingRequirements = (audit) => {
     const { requiredCoreCourses } = audit.track;
     const { coreGPAInfo, electiveGPAInfo, outstandingRequirements } = audit;
